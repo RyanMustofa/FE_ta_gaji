@@ -3,13 +3,13 @@ import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { Layout, Button, Row, Col } from 'antd'
-import { RiCloseLine, RiMenuFill } from 'react-icons/ri'
-import { Search } from 'react-iconly'
+import { RiMenuFill } from 'react-icons/ri'
+// import { Search } from 'react-iconly'
 
 import HeaderSearch from './HeaderSearch'
-import HeaderLanguages from './HeaderLanguages'
+// import HeaderLanguages from './HeaderLanguages'
 import HeaderUser from './HeaderUser'
-import HeaderNotifications from './HeaderNotifications'
+// import HeaderNotifications from './HeaderNotifications'
 import HeaderText from './HeaderText'
 
 const { Header } = Layout
@@ -87,9 +87,8 @@ export default function MenuHeader(props) {
 
         <Col>
           <Row align="middle">
-            <HeaderLanguages />
-
-            <Col className="hp-d-flex-center hp-mr-4">
+            {/* <HeaderLanguages /> */}
+            {/* <Col className="hp-d-flex-center hp-mr-4">
               {!searchHeader ? (
                 <Button
                   type="text"
@@ -107,10 +106,8 @@ export default function MenuHeader(props) {
                   onClick={() => setSearchHeader(false)}
                 />
               )}
-            </Col>
-
-            <HeaderNotifications />
-
+            </Col> */}
+            {/* <HeaderNotifications /> */}
             <HeaderUser />
           </Row>
         </Col>

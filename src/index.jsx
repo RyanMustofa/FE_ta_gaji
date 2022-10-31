@@ -1,23 +1,23 @@
-import React, { Suspense } from "react";
+import React, { Suspense } from 'react'
 
-import { BrowserRouter } from "react-router-dom";
-import ReactDOM from "react-dom";
+import { BrowserRouter } from 'react-router-dom'
+import ReactDOM from 'react-dom'
 
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux'
 import store from './redux/store'
 
-import "./assets/icons/remixicon.css";
-import "./assets/less/yoda-theme.less";
+import './assets/icons/remixicon.css'
+import './assets/less/yoda-theme.less'
 
-import App from "./App";
+import App from './App'
 
 ReactDOM.render(
   <Suspense fallback="loading">
     <Provider store={store}>
-      <BrowserRouter >
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
   </Suspense>,
-  document.getElementById("root")
-);
+  document.getElementById('root'),
+)
