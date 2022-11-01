@@ -11,7 +11,7 @@ import {
 } from 'antd'
 import React from 'react'
 
-export default function ModalAttendance({
+export default function ModalPosition({
   form,
   onCancel,
   onOk,
@@ -22,7 +22,7 @@ export default function ModalAttendance({
   return (
     <>
       <Modal
-        title={`${record ? 'Edit' : 'Tambah'} Data Absensi`}
+        title={`${record ? 'Edit' : 'Tambah'} Data Jabatan`}
         visible={visible}
         style={{
           marginTop: '-70px',
@@ -43,43 +43,30 @@ export default function ModalAttendance({
               <Col span={12}>
                 <Form.Item
                   name="id"
-                  label="ID Absence"
+                  label="ID Gaji"
                   rules={[
                     {
                       required: true,
-                      message: 'ID Absence tidak boleh kosong',
+                      message: 'ID Gaji tidak boleh kosong',
                     },
                   ]}
                 >
-                  <Input placeholder="ID Absence" />
+                  <Input placeholder="ID Gaji" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="id_employee"
-                  label="ID Karyawan"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'ID Karyawan tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Input placeholder="ID Karyawan" />
-                </Form.Item>
-              </Col>
+
               <Col span={12}>
                 <Form.Item
                   name="name"
-                  label="Nama"
+                  label="Nama Jabatan"
                   rules={[
                     {
                       required: true,
-                      message: 'Nama tidak boleh kosong',
+                      message: 'Nama Jabatan tidak boleh kosong',
                     },
                   ]}
                 >
-                  <Input placeholder="Nama" />
+                  <Input placeholder="Nama Jabatan" />
                 </Form.Item>
               </Col>
               <Col span={12}>

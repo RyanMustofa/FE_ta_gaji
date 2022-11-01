@@ -3,14 +3,14 @@ import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
 import { Button, Col, Form, Input, Row, Table } from 'antd'
 import { Delete, Edit } from 'react-iconly'
-import ModalAttendance from './modal'
+import ModalPosition from './modal'
 import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
 
 const endpoint = 'api/karyawan'
 
-export default function Attendance() {
+export default function Position() {
   const [visible, setVisible] = useState(false)
   const [record, setRecord] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -112,15 +112,11 @@ export default function Attendance() {
         meta?.page > 1 ? index + 1 + meta?.perPage : index + 1,
     },
     {
-      title: 'ID Absensi',
+      title: 'ID Gaji',
       dataIndex: 'id',
       key: 'id',
     },
-    {
-      title: 'ID Karyawan',
-      dataIndex: 'id_employee',
-      key: 'id_employee',
-    },
+
     {
       title: 'Nama',
       dataIndex: 'name',
@@ -132,19 +128,14 @@ export default function Attendance() {
       key: 'position',
     },
     {
-      title: 'Jam Masuk',
-      dataIndex: 'in',
-      key: 'in',
+      title: 'Detail Jabatan',
+      dataIndex: 'detail',
+      key: 'detail',
     },
     {
-      title: 'Jam Keluar',
-      dataIndex: 'out',
-      key: 'out',
-    },
-    {
-      title: 'Status Kehadiran',
-      dataIndex: 'remarks',
-      key: 'remarks',
+      title: 'Gaji Pokok',
+      dataIndex: 'basic_salary',
+      key: 'basic_salary',
     },
   ]
   const columns = [
@@ -186,7 +177,7 @@ export default function Attendance() {
   ]
   return (
     <>
-      <ModalAttendance
+      <ModalPosition
         visible={visible}
         record={record}
         form={form}
@@ -208,12 +199,12 @@ export default function Attendance() {
           <Row gutter={[32, 32]}>
             <Breadcrumbs
               breadCrumbParent="Pages"
-              breadCrumbActive="Data Absensi"
+              breadCrumbActive="Data Jabatan"
             />
           </Row>
         </Col>
 
-        <PageTitle pageTitle="Data Absensi" />
+        <PageTitle pageTitle="Data Jabatan" />
         <div style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
@@ -224,7 +215,7 @@ export default function Attendance() {
                   setRecord(null)
                 }}
               >
-                Tambah Absensi
+                Tambah Jabatan
               </Button>
             </Col>
             <Col>

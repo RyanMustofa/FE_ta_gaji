@@ -1,4 +1,14 @@
-import { CloseSquare, PaperPlus, TwoUsers } from 'react-iconly'
+import {
+  Calendar,
+  CloseSquare,
+  Document,
+  Paper,
+  PaperPlus,
+  People,
+  TwoUsers,
+  User,
+  Wallet,
+} from 'react-iconly'
 import IntlMessages from '../../layout/components/lang/IntlMessages'
 
 const pages = [
@@ -15,37 +25,37 @@ const pages = [
     id: 'attendance',
     title: 'Absensi',
     navLink: '/pages/attendance',
-    icon: <TwoUsers set="curved" className="remix-icon" />,
+    icon: <Calendar set="curved" className="remix-icon" />,
   },
   {
     id: 'position',
     title: 'Jabatan',
     navLink: '/pages/position',
-    icon: <TwoUsers set="curved" className="remix-icon" />,
+    icon: <People set="curved" className="remix-icon" />,
   },
   {
     id: 'payroll',
     title: 'Data Penggajian',
     navLink: '/pages/payroll',
-    icon: <TwoUsers set="curved" className="remix-icon" />,
+    icon: <Wallet set="curved" className="remix-icon" />,
   },
   {
     id: 'report-attendance',
     title: 'Laporan Absensi',
     navLink: '/pages/report-attendance',
-    icon: <TwoUsers set="curved" className="remix-icon" />,
+    icon: <Paper set="curved" className="remix-icon" />,
   },
   {
     id: 'report-payroll',
     title: 'Laporan Penggajian',
     navLink: '/pages/report-payroll',
-    icon: <TwoUsers set="curved" className="remix-icon" />,
+    icon: <Document set="curved" className="remix-icon" />,
   },
   {
     id: 'operator',
     title: 'Operator',
     navLink: '/pages/operator',
-    icon: <TwoUsers set="curved" className="remix-icon" />,
+    icon: <User set="curved" className="remix-icon" />,
   },
 ]
 
