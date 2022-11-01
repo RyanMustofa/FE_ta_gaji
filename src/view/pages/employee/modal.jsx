@@ -1,4 +1,4 @@
-import { Col, DatePicker, Form, Input, Modal, Row, Select } from 'antd'
+import { Col, DatePicker, Form, Input, Modal, Radio, Row, Select } from 'antd'
 import React from 'react'
 
 export default function ModalEmployee({
@@ -25,6 +25,7 @@ export default function ModalEmployee({
           style={{
             height: 'calc(100vh - 300px)',
             overflowY: 'scroll',
+            overflowX: 'hidden',
           }}
         >
           <Form form={form} layout="vertical">
@@ -79,6 +80,7 @@ export default function ModalEmployee({
                 <Form.Item
                   name="account_number"
                   label="No. Rek"
+                  required={true}
                   rules={[
                     {
                       validator: (rule, value, cb) => {
@@ -108,13 +110,17 @@ export default function ModalEmployee({
                     },
                   ]}
                 >
-                  <Input placeholder="Jenis Kelamin" />
+                  <Radio.Group>
+                    <Radio value="male">Laki-laki</Radio>
+                    <Radio value="female">Perempuan</Radio>
+                  </Radio.Group>
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
                   name="handphone"
                   label="No. HP"
+                  required={true}
                   rules={[
                     {
                       validator: (rule, value, cb) => {

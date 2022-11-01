@@ -16,6 +16,16 @@ const PagesRoutes = [
     component: lazy(() => import('../../view/pages/error')),
     layout: 'FullLayout',
   },
+  {
+    path: '/login',
+    component: lazy(() => import('../../view/authentication/login')),
+    layout: 'FullLayout',
+  },
+  {
+    path: '/register',
+    component: lazy(() => import('../../view/authentication/register')),
+    layout: 'FullLayout',
+  },
 ]
 
 export default PagesRoutes
