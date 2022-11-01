@@ -1,81 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
 import { Button, Col, Form, Input, Row, Table } from 'antd'
 import { Delete, Edit } from 'react-iconly'
 import ModalEmployee from './modal'
 import ModalDelete from '@/view/components/delete-modal'
-import httpRequest from '@/utils/axios'
-import moment from 'moment'
 
-const endpoint = 'api/karyawan'
-
-export default function Employee() {
+export default function Attendance() {
   const [visible, setVisible] = useState(false)
   const [record, setRecord] = useState(null)
   const [loading, setLoading] = useState(false)
   const [visibleDelete, setVisibleDelete] = useState(false)
   const [loadingDelete, setLoadingDelete] = useState(false)
-  const [antLoading, setAntLoading] = useState(false)
   const [form] = Form.useForm()
-  const [meta, setMeta] = useState({
-    dir: 'desc',
-    offset: 0,
-    order: 'created_at',
-    page: 1,
-    perPage: 10,
-    search: '',
-    total: 1,
-    totalPage: 1,
-  })
-  const [data, setData] = useState([])
-
-  const getData = async () => {
-    setAntLoading(true)
-    await httpRequest({
-      url: endpoint,
-      method: 'get',
-      params: meta,
-    })
-      .then((response) => {
-        setData(response?.data?.results)
-      })
-      .finally(() => {
-        setAntLoading(false)
-      })
-  }
-
-  useEffect(() => {
-    getData()
-  }, [meta])
 
   const onOk = () => {
-    form.validateFields().then(async (res) => {
-      setLoading(true)
-      await httpRequest({
-        url: endpoint,
-        method: record ? 'put' : 'post',
-        data: {
-          ...res,
-          tgl_lahir: moment(res.tgl_lahir).format('YYYY-MM-DD'),
-          tgl_masuk_kerja: moment(res.tgl_masuk_kerja).format('YYYY-MM-DD'),
-        },
-        params: {
-          id: record ? record.id : undefined,
-        },
-      })
-        .then((response) => {
-          setVisible(false)
-          form.resetFields()
-          setRecord(null)
-          getData()
-        })
-        .catch((error) => {
-          form.resetFields()
-        })
-        .finally(() => {
-          setLoading(false)
-        })
+    form.validateFields().then((res) => {
+      setLoading(false)
+      console.log(res)
+      setVisible(false)
+      setRecord(null)
+      form.resetFields()
     })
   }
 
@@ -96,14 +41,19 @@ export default function Employee() {
       render: (_, record, index) => index + 1,
     },
     {
+      title: 'ID Absensi',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
       title: 'ID Karyawan',
-      dataIndex: 'id_karyawan',
-      key: 'id_karyawan',
+      dataIndex: 'id_employee',
+      key: 'id_employee',
     },
     {
       title: 'Nama',
-      dataIndex: 'nama',
-      key: 'nama',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: 'Jabatan',
@@ -111,29 +61,19 @@ export default function Employee() {
       key: 'position',
     },
     {
-      title: 'Jenis Kelamin',
-      dataIndex: 'jenis_kelamin',
-      key: 'jenis_kelamin',
+      title: 'Jam Masuk',
+      dataIndex: 'in',
+      key: 'in',
     },
     {
-      title: 'No. HP',
-      dataIndex: 'no_hp',
-      key: 'no_hp',
+      title: 'Jam Keluar',
+      dataIndex: 'out',
+      key: 'out',
     },
     {
-      title: 'Tanggal Lahir',
-      dataIndex: 'tgl_lahir',
-      key: 'tgl_lahir',
-    },
-    {
-      title: 'Tanggal Masuk Kerja',
-      dataIndex: 'tgl_masuk_kerja',
-      key: 'tgl_masuk_kerja',
-    },
-    {
-      title: 'Alamat',
-      dataIndex: 'alamat',
-      key: 'alamat',
+      title: 'Status Kehadiran',
+      dataIndex: 'remarks',
+      key: 'remarks',
     },
   ]
   const columns = [
@@ -151,11 +91,6 @@ export default function Employee() {
               onClick={() => {
                 setVisible(true)
                 setRecord(record)
-                form.setFieldsValue({
-                  ...record,
-                  tgl_lahir: moment(record.tgl_lahir),
-                  tgl_masuk_kerja: moment(record.tgl_masuk),
-                })
               }}
             />
             <Delete
@@ -196,12 +131,12 @@ export default function Employee() {
           <Row gutter={[32, 32]}>
             <Breadcrumbs
               breadCrumbParent="Pages"
-              breadCrumbActive="Data Karyawan"
+              breadCrumbActive="Absensi Karyawan"
             />
           </Row>
         </Col>
 
-        <PageTitle pageTitle="Data Karyawan" />
+        <PageTitle pageTitle="Absensi Karyawan" />
         <div style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
@@ -212,28 +147,21 @@ export default function Employee() {
                   setRecord(null)
                 }}
               >
-                Tambah Karyawan
+                Tambah Absensi
               </Button>
             </Col>
             <Col>
-              <Input
-                onChange={(e) => {
-                  setTimeout(() => {
-                    setMeta({
-                      ...meta,
-                      search: e.target.value,
-                    })
-                  }, 500)
-                }}
-                allowClear
-                placeholder="Search"
-              />
+              <Input placeholder="Search" />
             </Col>
           </Row>
           <Table
             columns={columns}
-            dataSource={data}
-            loading={antLoading}
+            dataSource={[
+              {
+                name: 'tes',
+                position: 'tes',
+              },
+            ]}
             scroll={{
               x: 1000,
             }}

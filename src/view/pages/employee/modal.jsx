@@ -32,7 +32,7 @@ export default function ModalEmployee({
             <Row gutter={[20, 20]}>
               <Col span={12}>
                 <Form.Item
-                  name="id"
+                  name="id_karyawan"
                   label="ID Karyawan"
                   rules={[
                     {
@@ -46,7 +46,7 @@ export default function ModalEmployee({
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="name"
+                  name="nama"
                   label="Nama"
                   rules={[
                     {
@@ -58,7 +58,7 @@ export default function ModalEmployee({
                   <Input placeholder="Nama" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              {/* <Col span={12}>
                 <Form.Item
                   name="position"
                   label="Jabatan"
@@ -98,10 +98,10 @@ export default function ModalEmployee({
                 >
                   <Input placeholder="No. Rek" />
                 </Form.Item>
-              </Col>
+              </Col> */}
               <Col span={12}>
                 <Form.Item
-                  name="gender"
+                  name="jenis_kelamin"
                   label="Jenis Kelamin"
                   rules={[
                     {
@@ -111,14 +111,14 @@ export default function ModalEmployee({
                   ]}
                 >
                   <Radio.Group>
-                    <Radio value="male">Laki-laki</Radio>
-                    <Radio value="female">Perempuan</Radio>
+                    <Radio value="laki-laki">Laki-laki</Radio>
+                    <Radio value="perempuan">Perempuan</Radio>
                   </Radio.Group>
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="handphone"
+                  name="no_hp"
                   label="No. HP"
                   required={true}
                   rules={[
@@ -141,7 +141,7 @@ export default function ModalEmployee({
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="join_date"
+                  name="tgl_masuk_kerja"
                   label="Tgl Masuk Kerja"
                   rules={[
                     {
@@ -155,7 +155,7 @@ export default function ModalEmployee({
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="birthdate"
+                  name="tgl_lahir"
                   label="Tanggal Lahir"
                   rules={[
                     {
@@ -167,8 +167,63 @@ export default function ModalEmployee({
                   <DatePicker format={'DD-MM-YYYY'} style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="jumlah_istri"
+                  label="Jumlah Istri"
+                  required={true}
+                  rules={[
+                    {
+                      validator: (rule, value, cb) => {
+                        let values = value || null
+                        if (!values) {
+                          return cb('Jumlah Istri tidak boleh kosong')
+                        }
+                        if (!Number(values)) {
+                          return cb('Jumlah Istri harus angka')
+                        }
+                        return cb()
+                      },
+                    },
+                  ]}
+                >
+                  <Input placeholder="Jumlah Istri" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="jumlah_anak"
+                  label="Jumlah Anak"
+                  required={true}
+                  rules={[
+                    {
+                      validator: (rule, value, cb) => {
+                        let values = value || null
+                        if (!values) {
+                          return cb('Jumlah Anak tidak boleh kosong')
+                        }
+                        if (!Number(values)) {
+                          return cb('Jumlah Anak harus angka')
+                        }
+                        return cb()
+                      },
+                    },
+                  ]}
+                >
+                  <Input placeholder="Jumlah Anak" />
+                </Form.Item>
+              </Col>
               <Col span={24}>
-                <Form.Item name="address" label="Alamat">
+                <Form.Item
+                  name="alamat"
+                  label="Alamat"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Alamat tidak boleh kosong',
+                    },
+                  ]}
+                >
                   <Input.TextArea rows={3} placeholder="Alamat" />
                 </Form.Item>
               </Col>

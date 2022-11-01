@@ -7,7 +7,6 @@ import { IntlProvider } from 'react-intl'
 import AppLocale from './languages'
 
 import Router from './router/Router'
-import httpRequest from '@/utils/axios'
 
 export default function App() {
   // Redux
