@@ -28,6 +28,7 @@ export default function Employee() {
     total: 1,
     totalPage: 1,
   })
+  const [total, setTotal] = useState(0)
   const [data, setData] = useState([])
 
   const getData = async () => {
@@ -38,6 +39,7 @@ export default function Employee() {
       params: meta,
     })
       .then((response) => {
+        setTotal(response?.data?.meta?.total)
         setData(response?.data?.results)
       })
       .finally(() => {
@@ -85,15 +87,29 @@ export default function Employee() {
     form.resetFields()
   }
 
-  const handleDelete = () => {
-    setLoadingDelete(false)
-    console.log(record)
+  const handleDelete = async () => {
+    setLoadingDelete(true)
+    await httpRequest({
+      url: endpoint,
+      method: 'delete',
+      params: {
+        id: record?.id,
+      },
+    })
+      .then((res) => {
+        getData()
+        setVisibleDelete(false)
+      })
+      .finally(() => {
+        setLoadingDelete(false)
+      })
   }
 
   const fieldColumns = [
     {
       title: 'No',
-      render: (_, record, index) => index + 1,
+      render: (_, record, index) =>
+        meta?.page > 1 ? index + 1 + meta?.perPage : index + 1,
     },
     {
       title: 'ID Karyawan',
@@ -140,6 +156,7 @@ export default function Employee() {
     ...fieldColumns,
     {
       title: '#',
+      width: 100,
       render: (_, record, index) => {
         return (
           <>
@@ -233,9 +250,21 @@ export default function Employee() {
           <Table
             columns={columns}
             dataSource={data}
+            onChange={(pagination, filters, sorter) => {
+              setMeta({
+                ...meta,
+                page: pagination.current,
+                perPage: pagination.pageSize,
+              })
+            }}
+            pagination={{
+              current: meta.page,
+              total,
+              pageSize: meta.perPage,
+            }}
             loading={antLoading}
             scroll={{
-              x: 1000,
+              x: 1300,
             }}
           />
         </div>
