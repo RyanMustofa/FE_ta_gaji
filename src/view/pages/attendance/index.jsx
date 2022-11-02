@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
-import { Button, Col, Form, Input, Row, Table } from 'antd'
+import { Button, Card, Col, Form, Input, Row, Table } from 'antd'
 import { Delete, Edit } from 'react-iconly'
 import ModalAttendance from './modal'
 import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
 
-const endpoint = 'api/karyawan'
+const endpoint = 'api/absen'
+const endpointKaryawan = 'api/karyawan'
 
 export default function Attendance() {
   const [visible, setVisible] = useState(false)
@@ -17,6 +18,7 @@ export default function Attendance() {
   const [visibleDelete, setVisibleDelete] = useState(false)
   const [loadingDelete, setLoadingDelete] = useState(false)
   const [antLoading, setAntLoading] = useState(false)
+  const [dataEmployee, setDataEmployee] = useState([])
   const [form] = Form.useForm()
   const [meta, setMeta] = useState({
     dir: 'desc',
@@ -30,6 +32,11 @@ export default function Attendance() {
   })
   const [total, setTotal] = useState(0)
   const [data, setData] = useState([])
+  const [loadingAdd, setLoadingAdd] = useState(false)
+
+  const state = {
+    dataEmployee,
+  }
 
   const getData = async () => {
     setAntLoading(true)
@@ -47,7 +54,27 @@ export default function Attendance() {
       })
   }
 
+  const getEmployee = async () => {
+    // setLoadingAdd(true)
+    await httpRequest({
+      url: endpointKaryawan,
+      method: 'get',
+      params: {
+        ...meta,
+        perPage: 100000,
+      },
+    })
+      .then((response) => {
+        setDataEmployee(response?.data?.results)
+        // setVisible(true)
+      })
+      .finally(() => {
+        // setLoadingAdd(false)
+      })
+  }
+
   useEffect(() => {
+    getEmployee()
     getData()
   }, [meta])
 
@@ -59,8 +86,9 @@ export default function Attendance() {
         method: record ? 'put' : 'post',
         data: {
           ...res,
-          tgl_lahir: moment(res.tgl_lahir).format('YYYY-MM-DD'),
-          tgl_masuk_kerja: moment(res.tgl_masuk_kerja).format('YYYY-MM-DD'),
+          jam_masuk: moment(res.jam_masuk).format('HH:mm:ss'),
+          jam_pulang: moment(res.jam_pulang).format('HH:mm:ss'),
+          tgl_absen: moment(res.tgl_absen).format('YYYY-MM-DD'),
         },
         params: {
           id: record ? record.id : undefined,
@@ -77,6 +105,7 @@ export default function Attendance() {
         })
         .finally(() => {
           setLoading(false)
+          setLoadingAdd(false)
         })
     })
   }
@@ -84,6 +113,7 @@ export default function Attendance() {
   const onCancel = () => {
     setVisible(false)
     setRecord(null)
+    setLoadingAdd(false)
     form.resetFields()
   }
 
@@ -112,38 +142,24 @@ export default function Attendance() {
         meta?.page > 1 ? index + 1 + meta?.perPage : index + 1,
     },
     {
-      title: 'ID Absensi',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'ID Karyawan',
-      dataIndex: 'id_employee',
-      key: 'id_employee',
-    },
-    {
       title: 'Nama',
-      dataIndex: 'name',
+      dataIndex: ['karyawan', 'nama'],
       key: 'name',
     },
-    {
-      title: 'Jabatan',
-      dataIndex: 'position',
-      key: 'position',
-    },
+
     {
       title: 'Jam Masuk',
-      dataIndex: 'in',
+      dataIndex: 'jam_masuk',
       key: 'in',
     },
     {
       title: 'Jam Keluar',
-      dataIndex: 'out',
+      dataIndex: 'jam_pulang',
       key: 'out',
     },
     {
       title: 'Status Kehadiran',
-      dataIndex: 'remarks',
+      dataIndex: 'status_kehadiran',
       key: 'remarks',
     },
   ]
@@ -165,8 +181,9 @@ export default function Attendance() {
                 setRecord(record)
                 form.setFieldsValue({
                   ...record,
-                  tgl_lahir: moment(record.tgl_lahir),
-                  tgl_masuk_kerja: moment(record.tgl_masuk),
+                  jam_masuk: moment('2022-10-21T' + record.jam_masuk),
+                  jam_pulang: moment('2022-10-21T' + record.jam_pulang),
+                  tgl_absen: moment(record.tgl_absen),
                 })
               }}
             />
@@ -192,6 +209,7 @@ export default function Attendance() {
         form={form}
         loading={loading}
         onCancel={onCancel}
+        state={state}
         onOk={onOk}
       />
       <ModalDelete
@@ -214,15 +232,16 @@ export default function Attendance() {
         </Col>
 
         <PageTitle pageTitle="Data Absensi" />
-        <div style={{ marginTop: 20, width: '100%', padding: 10 }}>
+        <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
               <Button
                 type="primary"
                 onClick={() => {
-                  setVisible(true)
                   setRecord(null)
+                  setVisible(true)
                 }}
+                loading={loadingAdd}
               >
                 Tambah Absensi
               </Button>
@@ -259,10 +278,10 @@ export default function Attendance() {
             }}
             loading={antLoading}
             scroll={{
-              x: 1300,
+              x: 1000,
             }}
           />
-        </div>
+        </Card>
       </Row>
     </>
   )

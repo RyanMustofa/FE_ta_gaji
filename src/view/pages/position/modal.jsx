@@ -16,114 +16,74 @@ export default function ModalPosition({
   onCancel,
   onOk,
   loading,
+  state,
   record,
   visible,
 }) {
   return (
     <>
       <Modal
-        title={`${record ? 'Edit' : 'Tambah'} Data Jabatan`}
+        title={`${record ? 'Edit' : 'Tambah'} Data ${
+          state.type === 'jabatan' ? 'Jabatan' : 'Komponen'
+        }`}
         visible={visible}
-        style={{
-          marginTop: '-70px',
-        }}
         confirmLoading={loading}
         onCancel={onCancel}
         onOk={onOk}
       >
-        <div
-          style={{
-            height: 'calc(100vh - 300px)',
-            overflowY: 'scroll',
-            overflowX: 'hidden',
-          }}
-        >
-          <Form form={form} layout="vertical">
-            <Row gutter={[20, 20]}>
-              <Col span={12}>
-                <Form.Item
-                  name="id"
-                  label="ID Gaji"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'ID Gaji tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Input placeholder="ID Gaji" />
-                </Form.Item>
-              </Col>
+        <Form form={form} layout="vertical">
+          <Row gutter={[20, 20]}>
+            <Col span={12}>
+              <Form.Item
+                name="nama"
+                label={`Nama ${
+                  state.type === 'jabatan' ? 'Jabatan' : 'Komponen'
+                }`}
+                rules={[
+                  {
+                    required: true,
+                    message: `Nama ${
+                      state.type === 'jabatan' ? 'Jabatan' : 'Komponen'
+                    } tidak boleh kosong`,
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={`Nama ${
+                    state.type === 'jabatan' ? 'Jabatan' : 'Komponen'
+                  }`}
+                />
+              </Form.Item>
+            </Col>
 
-              <Col span={12}>
-                <Form.Item
-                  name="name"
-                  label="Nama Jabatan"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Nama Jabatan tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nama Jabatan" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="position"
-                  label="Jabatan"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Jabatan tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Select placeholder="Jabatan">
-                    <Select.Option key={1} value={1}>
-                      Developer
+            <Col span={12}>
+              <Form.Item
+                name="tipe"
+                label="Tipe"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Tipe tidak boleh kosong',
+                  },
+                ]}
+              >
+                {state.type === 'jabatan' ? (
+                  <Select placeholder="Pilih Tipe">
+                    <Select.Option value="Pamong">Pamong</Select.Option>
+                    <Select.Option value="Staff">Staff</Select.Option>
+                  </Select>
+                ) : (
+                  <Select placeholder="Pilih Tipe">
+                    <Select.Option value="Penambahan">Penambahan</Select.Option>
+                    <Select.Option value="Pengurangan">
+                      Pengurangan
                     </Select.Option>
                   </Select>
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  name="in"
-                  label="Jam Masuk"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Jam Masuk tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <TimePicker style={{ width: '100%' }} />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="in"
-                  label="Jam Keluar"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Jam Keluar tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <TimePicker style={{ width: '100%' }} />
-                </Form.Item>
-              </Col>
-              <Col span={24}>
-                <Form.Item name="remarks" label="Status Kehadiran">
-                  <Input.TextArea rows={3} placeholder="Status Kehadiran" />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </div>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
       </Modal>
     </>
   )

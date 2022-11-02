@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
-import { Button, Col, Form, Input, Row, Table } from 'antd'
+import { Button, Card, Col, Form, Input, Row, Table } from 'antd'
 import { Delete, Edit } from 'react-iconly'
 import ModalEmployee from './modal'
 import ModalDelete from '@/view/components/delete-modal'
@@ -219,7 +219,7 @@ export default function Employee() {
         </Col>
 
         <PageTitle pageTitle="Data Karyawan" />
-        <div style={{ marginTop: 20, width: '100%', padding: 10 }}>
+        <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
               <Button
@@ -267,7 +267,7 @@ export default function Employee() {
               x: 1300,
             }}
           />
-        </div>
+        </Card>
       </Row>
     </>
   )

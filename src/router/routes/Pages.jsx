@@ -22,6 +22,11 @@ const PagesRoutes = [
     layout: 'VerticalLayout',
   },
   {
+    path: '/pages/set-component',
+    component: lazy(() => import('../../view/pages/position/setupComponent')),
+    layout: 'VerticalLayout',
+  },
+  {
     path: '/pages/error-page',
     component: lazy(() => import('../../view/pages/error')),
     layout: 'FullLayout',

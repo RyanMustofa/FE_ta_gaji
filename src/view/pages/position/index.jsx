@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
-import { Button, Col, Form, Input, Row, Table } from 'antd'
+import { Button, Card, Col, Form, Input, Row, Table } from 'antd'
 import { Delete, Edit } from 'react-iconly'
 import ModalPosition from './modal'
 import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
-const endpoint = 'api/karyawan'
+const endpoint = 'api/jabatan'
+const endpointKomponen = 'api/komponen'
 
 export default function Position() {
   const [visible, setVisible] = useState(false)
@@ -18,6 +20,7 @@ export default function Position() {
   const [loadingDelete, setLoadingDelete] = useState(false)
   const [antLoading, setAntLoading] = useState(false)
   const [form] = Form.useForm()
+  const [type, setType] = useState('jabatan')
   const [meta, setMeta] = useState({
     dir: 'desc',
     offset: 0,
@@ -30,6 +33,10 @@ export default function Position() {
   })
   const [total, setTotal] = useState(0)
   const [data, setData] = useState([])
+
+  const state = {
+    type,
+  }
 
   const getData = async () => {
     setAntLoading(true)
@@ -55,12 +62,10 @@ export default function Position() {
     form.validateFields().then(async (res) => {
       setLoading(true)
       await httpRequest({
-        url: endpoint,
+        url: type === 'jabatan' ? endpoint : endpointKomponen,
         method: record ? 'put' : 'post',
         data: {
           ...res,
-          tgl_lahir: moment(res.tgl_lahir).format('YYYY-MM-DD'),
-          tgl_masuk_kerja: moment(res.tgl_masuk_kerja).format('YYYY-MM-DD'),
         },
         params: {
           id: record ? record.id : undefined,
@@ -111,31 +116,16 @@ export default function Position() {
       render: (_, record, index) =>
         meta?.page > 1 ? index + 1 + meta?.perPage : index + 1,
     },
-    {
-      title: 'ID Gaji',
-      dataIndex: 'id',
-      key: 'id',
-    },
 
     {
       title: 'Nama',
-      dataIndex: 'name',
+      dataIndex: 'nama',
       key: 'name',
     },
     {
-      title: 'Jabatan',
-      dataIndex: 'position',
-      key: 'position',
-    },
-    {
-      title: 'Detail Jabatan',
-      dataIndex: 'detail',
-      key: 'detail',
-    },
-    {
-      title: 'Gaji Pokok',
-      dataIndex: 'basic_salary',
-      key: 'basic_salary',
+      title: 'Nama',
+      dataIndex: 'tipe',
+      key: 'name',
     },
   ]
   const columns = [
@@ -153,6 +143,7 @@ export default function Position() {
               }}
               onClick={() => {
                 setVisible(true)
+                setType('jabatan')
                 setRecord(record)
                 form.setFieldsValue({
                   ...record,
@@ -175,6 +166,28 @@ export default function Position() {
       },
     },
   ]
+
+  const fieldColumnsExpanded = [
+    {
+      title: 'Nama',
+      dataIndex: 'nama',
+      key: 'nama',
+    },
+    {
+      title: 'Tipe',
+      dataIndex: 'tipe',
+      key: 'tipe',
+    },
+  ]
+
+  const expandedRowRender = (record) => {
+    return <Table columns={fieldColumnsExpanded} />
+  }
+
+  const expandable = {
+    expandedRowRender,
+  }
+
   return (
     <>
       <ModalPosition
@@ -182,6 +195,7 @@ export default function Position() {
         record={record}
         form={form}
         loading={loading}
+        state={state}
         onCancel={onCancel}
         onOk={onOk}
       />
@@ -205,19 +219,47 @@ export default function Position() {
         </Col>
 
         <PageTitle pageTitle="Data Jabatan" />
-        <div style={{ marginTop: 20, width: '100%', padding: 10 }}>
+        <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
-            <Col>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setVisible(true)
-                  setRecord(null)
+            <Row>
+              <Col>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setVisible(true)
+                    setRecord(null)
+                    setType('jabatan')
+                  }}
+                >
+                  Tambah Jabatan
+                </Button>
+              </Col>
+              <Col
+                style={{
+                  marginLeft: 10,
                 }}
               >
-                Tambah Jabatan
-              </Button>
-            </Col>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setVisible(true)
+                    setRecord(null)
+                    setType('component')
+                  }}
+                >
+                  Kelola Komponen
+                </Button>
+              </Col>
+              <Col
+                style={{
+                  marginLeft: 10,
+                }}
+              >
+                <Link to="/pages/set-component">
+                  <Button type="primary">Kelola Gaji</Button>
+                </Link>
+              </Col>
+            </Row>
             <Col>
               <Input
                 onChange={(e) => {
@@ -243,17 +285,15 @@ export default function Position() {
                 perPage: pagination.pageSize,
               })
             }}
+            expandable={expandable}
             pagination={{
               current: meta.page,
               total,
               pageSize: meta.perPage,
             }}
             loading={antLoading}
-            scroll={{
-              x: 1300,
-            }}
           />
-        </div>
+        </Card>
       </Row>
     </>
   )

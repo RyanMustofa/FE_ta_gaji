@@ -18,6 +18,7 @@ export default function ModalAttendance({
   loading,
   record,
   visible,
+  state,
 }) {
   return (
     <>
@@ -42,68 +43,7 @@ export default function ModalAttendance({
             <Row gutter={[20, 20]}>
               <Col span={12}>
                 <Form.Item
-                  name="id"
-                  label="ID Absence"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'ID Absence tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Input placeholder="ID Absence" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="id_employee"
-                  label="ID Karyawan"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'ID Karyawan tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Input placeholder="ID Karyawan" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="name"
-                  label="Nama"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Nama tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nama" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="position"
-                  label="Jabatan"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Jabatan tidak boleh kosong',
-                    },
-                  ]}
-                >
-                  <Select placeholder="Jabatan">
-                    <Select.Option key={1} value={1}>
-                      Developer
-                    </Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  name="in"
+                  name="jam_masuk"
                   label="Jam Masuk"
                   rules={[
                     {
@@ -117,7 +57,7 @@ export default function ModalAttendance({
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="in"
+                  name="jam_pulang"
                   label="Jam Keluar"
                   rules={[
                     {
@@ -129,8 +69,57 @@ export default function ModalAttendance({
                   <TimePicker style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="karyawan_id"
+                  label="ID Karyawan"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'ID Karyawan tidak boleh kosong',
+                    },
+                  ]}
+                >
+                  <Select placeholder="Pilih Karyawan" allowClear>
+                    {state.dataEmployee.map((el) => {
+                      return (
+                        <Select.Option value={el.id} key={el.id}>
+                          {el.nama}
+                        </Select.Option>
+                      )
+                    })}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="tgl_absen"
+                  label="Tanggal Absensi"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Tanggal Absensi tidak boleh kosong',
+                    },
+                  ]}
+                >
+                  <DatePicker
+                    getPopupContainer={(parent) => parent.parentNode}
+                    style={{ width: '100%' }}
+                    format="DD-MM-YYYY"
+                  />
+                </Form.Item>
+              </Col>
               <Col span={24}>
-                <Form.Item name="remarks" label="Status Kehadiran">
+                <Form.Item
+                  name="status_kehadiran"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Status kehadiran tidak boleh kosong',
+                    },
+                  ]}
+                  label="Status Kehadiran"
+                >
                   <Input.TextArea rows={3} placeholder="Status Kehadiran" />
                 </Form.Item>
               </Col>
