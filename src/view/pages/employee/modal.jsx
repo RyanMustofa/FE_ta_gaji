@@ -7,6 +7,7 @@ export default function ModalEmployee({
   onOk,
   loading,
   record,
+  state,
   visible,
 }) {
   return (
@@ -58,9 +59,9 @@ export default function ModalEmployee({
                   <Input placeholder="Nama" />
                 </Form.Item>
               </Col>
-              {/* <Col span={12}>
+              <Col span={24}>
                 <Form.Item
-                  name="position"
+                  name="jabatan_id"
                   label="Jabatan"
                   rules={[
                     {
@@ -70,35 +71,16 @@ export default function ModalEmployee({
                   ]}
                 >
                   <Select placeholder="Jabatan">
-                    <Select.Option key={1} value={1}>
-                      Developer
-                    </Select.Option>
+                    {state.dataJabatan.map((el) => {
+                      return (
+                        <Select.Option key={el.id} value={el.id}>
+                          {el.nama}
+                        </Select.Option>
+                      )
+                    })}
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="account_number"
-                  label="No. Rek"
-                  required={true}
-                  rules={[
-                    {
-                      validator: (rule, value, cb) => {
-                        let values = value || null
-                        if (!values) {
-                          cb('No. Rek tidak boleh kosong')
-                        }
-                        if (!Number(values)) {
-                          return cb('No. Rek harus angka')
-                        }
-                        return cb()
-                      },
-                    },
-                  ]}
-                >
-                  <Input placeholder="No. Rek" />
-                </Form.Item>
-              </Col> */}
               <Col span={12}>
                 <Form.Item
                   name="jenis_kelamin"
@@ -167,7 +149,7 @@ export default function ModalEmployee({
                   <DatePicker format={'DD-MM-YYYY'} style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              {/* <Col span={12}>
                 <Form.Item
                   name="jumlah_istri"
                   label="Jumlah Istri"
@@ -212,7 +194,7 @@ export default function ModalEmployee({
                 >
                   <Input placeholder="Jumlah Anak" />
                 </Form.Item>
-              </Col>
+              </Col> */}
               <Col span={24}>
                 <Form.Item
                   name="alamat"

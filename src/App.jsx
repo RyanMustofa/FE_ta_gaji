@@ -1,23 +1,25 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import { ConfigProvider } from "antd";
-import { IntlProvider } from "react-intl";
+import { ConfigProvider } from 'antd'
+import { IntlProvider } from 'react-intl'
 
-import AppLocale from "./languages";
+import AppLocale from './languages'
 
-import Router from "./router/Router";
+import Router from './router/Router'
+import { useLocation } from 'react-router-dom'
 
 export default function App() {
+  const { pathname } = useLocation()
   // Redux
-  const customise = useSelector((state) => state.customise);
+  const customise = useSelector((state) => state.customise)
 
   // Lang
-  const currentAppLocale = AppLocale[customise.language];
+  const currentAppLocale = AppLocale[customise.language]
 
   useEffect(() => {
-    document.querySelector("html").setAttribute("lang", customise.language);
-  }, [customise]);
+    document.querySelector('html').setAttribute('lang', customise.language)
+  }, [customise])
 
   return (
     <ConfigProvider
@@ -31,5 +33,5 @@ export default function App() {
         <Router />
       </IntlProvider>
     </ConfigProvider>
-  );
+  )
 }

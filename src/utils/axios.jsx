@@ -44,6 +44,15 @@ httpRequest.interceptors.response.use(
         icon: <CloseSquare set="curved" className="remix-icon" />,
       })
     }
+    if (error?.response?.status === 401) {
+      notification.error({
+        message: 'Failed',
+        description: error?.response?.data?.message,
+        icon: <CloseSquare set="curved" className="remix-icon" />,
+      })
+      window.localStorage.clear()
+      window.location.href = '/login'
+    }
     return Promise.reject(error)
   },
 )

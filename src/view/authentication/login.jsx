@@ -1,17 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-
 import { Row, Col, Form, Input, Button } from 'antd'
+import httpRequest from '@/utils/axios'
 
 import LeftContent from './leftContent'
+
+const endpoint = 'api/login'
 
 export default function Login() {
   const [form] = Form.useForm()
   const { push } = useHistory()
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = () => {
-    form.validateFields().then((res) => {
-      push('/')
+    form.validateFields().then(async (res) => {
+      setLoading(true)
+      await httpRequest({
+        method: 'post',
+        url: endpoint,
+        data: res,
+      })
+        .then((response) => {
+          window.localStorage.setItem('token', response?.data?.data?.token)
+          push('/')
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     })
   }
   return (
@@ -41,17 +56,17 @@ export default function Login() {
               className="hp-mt-sm-16 hp-mt-32"
             >
               <Form.Item
-                label="Email :"
-                name="email"
+                label="Username :"
+                name="username"
                 className="hp-mb-16"
                 rules={[
                   {
                     required: true,
-                    type: 'email',
+                    // type: 'Username',
                   },
                 ]}
               >
-                <Input placeholder="Input Email" />
+                <Input placeholder="Input Username" />
               </Form.Item>
 
               <Form.Item
@@ -67,7 +82,7 @@ export default function Login() {
                 <Input.Password placeholder="Input Password" />
               </Form.Item>
 
-              <Row align="middle" justify="space-between">
+              {/* <Row align="middle" justify="space-between">
                 <div></div>
 
                 <Link
@@ -76,13 +91,14 @@ export default function Login() {
                 >
                   Forgot Password?
                 </Link>
-              </Row>
+              </Row> */}
 
               <Form.Item className="hp-mt-16 hp-mb-8">
                 <Button
                   block
                   type="primary"
                   htmlType="submit"
+                  loading={loading}
                   onClick={handleSubmit}
                 >
                   Sign in
@@ -90,7 +106,7 @@ export default function Login() {
               </Form.Item>
             </Form>
 
-            <Col className="hp-form-info">
+            {/* <Col className="hp-form-info">
               <span className="hp-text-color-black-80 hp-text-color-dark-40 hp-caption hp-mr-4">
                 Don’t you have an account?
               </span>
@@ -101,7 +117,7 @@ export default function Login() {
               >
                 Create an account
               </Link>
-            </Col>
+            </Col> */}
           </Col>
         </Row>
       </Col>

@@ -8,8 +8,7 @@ import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
 
-const endpoint = 'api/karyawan'
-const endpointJabatan = 'api/jabatan'
+const endpoint = 'api/user'
 
 export default function Employee() {
   const [visible, setVisible] = useState(false)
@@ -18,6 +17,11 @@ export default function Employee() {
   const [visibleDelete, setVisibleDelete] = useState(false)
   const [loadingDelete, setLoadingDelete] = useState(false)
   const [antLoading, setAntLoading] = useState(false)
+  const [baseUrl, setBaseUrl] = useState({
+    status: false,
+    url: '',
+    fileList: [],
+  })
   const [form] = Form.useForm()
   const [meta, setMeta] = useState({
     dir: 'desc',
@@ -31,10 +35,10 @@ export default function Employee() {
   })
   const [total, setTotal] = useState(0)
   const [data, setData] = useState([])
-  const [dataJabatan, setDataJabatan] = useState([])
 
   const state = {
-    dataJabatan,
+    baseUrl,
+    setBaseUrl,
   }
 
   const getData = async () => {
@@ -53,18 +57,8 @@ export default function Employee() {
       })
   }
 
-  const getPosition = async () => {
-    await httpRequest({
-      url: endpointJabatan,
-      method: 'get',
-    }).then((response) => {
-      setDataJabatan(response?.data?.results)
-    })
-  }
-
   useEffect(() => {
     getData()
-    getPosition()
   }, [meta])
 
   const onOk = () => {
@@ -75,8 +69,7 @@ export default function Employee() {
         method: record ? 'put' : 'post',
         data: {
           ...res,
-          tgl_lahir: moment(res.tgl_lahir).format('YYYY-MM-DD'),
-          tgl_masuk_kerja: moment(res.tgl_masuk_kerja).format('YYYY-MM-DD'),
+          foto: baseUrl.url,
         },
         params: {
           id: record ? record.id : undefined,
@@ -87,6 +80,11 @@ export default function Employee() {
           form.resetFields()
           setRecord(null)
           getData()
+          setBaseUrl({
+            status: false,
+            url: '',
+            fileList: [],
+          })
         })
         .catch((error) => {
           form.resetFields()
@@ -100,6 +98,11 @@ export default function Employee() {
   const onCancel = () => {
     setVisible(false)
     setRecord(null)
+    setBaseUrl({
+      status: false,
+      url: '',
+      fileList: [],
+    })
     form.resetFields()
   }
 
@@ -127,45 +130,26 @@ export default function Employee() {
       render: (_, record, index) =>
         meta?.page > 1 ? index + 1 + meta?.perPage : index + 1,
     },
-    {
-      title: 'ID Karyawan',
-      dataIndex: 'id_karyawan',
-      key: 'id_karyawan',
-    },
+
     {
       title: 'Nama',
       dataIndex: 'nama',
       key: 'nama',
     },
     {
-      title: 'Jabatan',
-      dataIndex: ['jabatan', 'nama'],
-      key: 'position',
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
     },
     {
-      title: 'Jenis Kelamin',
-      dataIndex: 'jenis_kelamin',
-      key: 'jenis_kelamin',
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
     },
     {
-      title: 'No. HP',
-      dataIndex: 'no_hp',
-      key: 'no_hp',
-    },
-    {
-      title: 'Tanggal Lahir',
-      dataIndex: 'tgl_lahir',
-      key: 'tgl_lahir',
-    },
-    {
-      title: 'Tanggal Masuk Kerja',
-      dataIndex: 'tgl_masuk_kerja',
-      key: 'tgl_masuk_kerja',
-    },
-    {
-      title: 'Alamat',
-      dataIndex: 'alamat',
-      key: 'alamat',
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
     },
   ]
   const columns = [
@@ -184,6 +168,17 @@ export default function Employee() {
               onClick={() => {
                 setVisible(true)
                 setRecord(record)
+                if (record?.foto) {
+                  setBaseUrl({
+                    status: true,
+                    url: record.foto,
+                    fileList: [
+                      {
+                        id: 1,
+                      },
+                    ],
+                  })
+                }
                 form.setFieldsValue({
                   ...record,
                   tgl_lahir: moment(record.tgl_lahir),
@@ -230,12 +225,12 @@ export default function Employee() {
           <Row gutter={[32, 32]}>
             <Breadcrumbs
               breadCrumbParent="Pages"
-              breadCrumbActive="Data Karyawan"
+              breadCrumbActive="Data Pengguna"
             />
           </Row>
         </Col>
 
-        <PageTitle pageTitle="Data Karyawan" />
+        <PageTitle pageTitle="Data Pengguna" />
         <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
@@ -246,7 +241,7 @@ export default function Employee() {
                   setRecord(null)
                 }}
               >
-                Tambah Karyawan
+                Tambah Pengguna
               </Button>
             </Col>
             <Col>
@@ -281,7 +276,7 @@ export default function Employee() {
             }}
             loading={antLoading}
             scroll={{
-              x: 1300,
+              x: 800,
             }}
           />
         </Card>

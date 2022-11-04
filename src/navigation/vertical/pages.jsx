@@ -2,6 +2,7 @@ import {
   Calendar,
   CloseSquare,
   Document,
+  Lock,
   Paper,
   PaperPlus,
   People,
@@ -13,7 +14,7 @@ import IntlMessages from '../../layout/components/lang/IntlMessages'
 
 const pages = [
   {
-    header: <IntlMessages id="sidebar-pages" />,
+    header: 'Master Data',
   },
   {
     id: 'employee',
@@ -34,6 +35,15 @@ const pages = [
     icon: <People set="curved" className="remix-icon" />,
   },
   {
+    id: 'user',
+    title: 'Pengguna',
+    navLink: '/pages/user',
+    icon: <Lock set="curved" className="remix-icon" />,
+  },
+  {
+    header: 'Transaksi',
+  },
+  {
     id: 'payroll',
     title: 'Data Penggajian',
     navLink: '/pages/payroll',
@@ -50,12 +60,6 @@ const pages = [
     title: 'Laporan Penggajian',
     navLink: '/pages/report-payroll',
     icon: <Document set="curved" className="remix-icon" />,
-  },
-  {
-    id: 'operator',
-    title: 'Operator',
-    navLink: '/pages/operator',
-    icon: <User set="curved" className="remix-icon" />,
   },
 ]
 

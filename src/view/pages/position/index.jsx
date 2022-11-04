@@ -47,7 +47,13 @@ export default function Position() {
     })
       .then((response) => {
         setTotal(response?.data?.meta?.total)
-        setData(response?.data?.results)
+        let data = response?.data?.results.map((el) => {
+          return {
+            ...el,
+            key: el.id,
+          }
+        })
+        setData(data)
       })
       .finally(() => {
         setAntLoading(false)
@@ -170,18 +176,29 @@ export default function Position() {
   const fieldColumnsExpanded = [
     {
       title: 'Nama',
-      dataIndex: 'nama',
+      dataIndex: ['komponen', 'nama'],
       key: 'nama',
     },
     {
       title: 'Tipe',
-      dataIndex: 'tipe',
+      dataIndex: ['komponen', 'tipe'],
       key: 'tipe',
+    },
+    {
+      title: 'Jumlah',
+      dataIndex: 'jumlah',
+      key: 'jumlah',
     },
   ]
 
   const expandedRowRender = (record) => {
-    return <Table columns={fieldColumnsExpanded} />
+    return (
+      <Table
+        columns={fieldColumnsExpanded}
+        pagination={false}
+        dataSource={record.tunjangans.concat(record.potongans)}
+      />
+    )
   }
 
   const expandable = {

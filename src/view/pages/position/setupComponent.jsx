@@ -41,7 +41,7 @@ export default function SetupComponent() {
     },
   ]
 
-  const getDataKomponen = async () => {
+  const getDataKomponen = async (valueComponent) => {
     setAntLoading(true)
     await httpRequest({
       url: endpointKomponen,
@@ -49,12 +49,19 @@ export default function SetupComponent() {
     })
       .then((res) => {
         let arr = res?.data?.results.map((el) => {
-          return {
-            ...el,
-            nominal: null,
+          return { ...el, nominal: null }
+        })
+        let data = arr.map((el) => {
+          if (valueComponent.find((els) => els.id === el.id)) {
+            return {
+              ...valueComponent.find((els) => els.id === el.id),
+              id_table: valueComponent.find((els) => els.id === el.id).id_table,
+            }
+          } else {
+            return { ...el, id_table: null }
           }
         })
-        setChangeValue(arr)
+        setChangeValue(data)
       })
       .finally(() => {
         setAntLoading(false)
@@ -86,7 +93,27 @@ export default function SetupComponent() {
         filterID: id,
       },
     })
-      .then((response) => {
+      .then(async (response) => {
+        let valueComponent = response?.data?.results.map((el) => {
+          let allowance = el.tunjangans.map((els) => {
+            return {
+              ...els.komponen,
+              nominal: els.jumlah,
+              id_table: el.id,
+            }
+          })
+          let deduction = el.potongans.map((els) => {
+            return {
+              ...els.komponen,
+              nominal: els.jumlah,
+              id_table: el.id,
+            }
+          })
+          return [...allowance, ...deduction]
+        })
+        await getDataKomponen(
+          valueComponent.length > 0 ? valueComponent[0] : {},
+        )
         setDataFilter(response?.data?.results)
       })
       .finally(() => {
@@ -95,7 +122,7 @@ export default function SetupComponent() {
   }
 
   useEffect(() => {
-    getDataKomponen()
+    // getDataKomponen()
     getDataPosition()
   }, [])
 
@@ -143,18 +170,18 @@ export default function SetupComponent() {
         .filter((el) => el.tipe === 'Penambahan')
         .map((el) => {
           return {
-            id: null,
+            id: el.id_table,
             komponen_id: el.id,
-            jumlah: el.nominal,
+            jumlah: parseInt(el.nominal),
           }
         }),
       pengurangan: changeValue
         .filter((el) => el.tipe === 'Pengurangan')
         .map((el) => {
           return {
-            id: null,
+            id: el.id_table,
             komponen_id: el.id,
-            jumlah: el.nominal,
+            jumlah: parseInt(el.nominal),
           }
         }),
     }

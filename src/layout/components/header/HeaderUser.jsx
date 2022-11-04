@@ -2,10 +2,15 @@ import { Link } from 'react-router-dom'
 
 import { Dropdown, Col, Avatar, Divider, Row } from 'antd'
 import { Calendar, Game, People } from 'react-iconly'
-
+import { useHistory } from 'react-router-dom'
 import avatarImg from '../../../assets/images/memoji/memoji-1.png'
 
 export default function HeaderUser() {
+  const { push } = useHistory()
+  const handleLogout = () => {
+    window.localStorage.clear()
+    push('/login')
+  }
   const menu = (
     <div
       className="hp-border-radius hp-border-1 hp-border-color-black-40 hp-bg-black-0 hp-bg-dark-100 hp-border-color-dark-80 hp-p-24 hp-mt-12"
@@ -64,9 +69,15 @@ export default function HeaderUser() {
 
       <Divider className="hp-mb-16 hp-mt-6" />
 
-      <Link to="/login" className="hp-p1-body">
+      <div
+        onClick={handleLogout}
+        style={{
+          cursor: 'pointer',
+        }}
+        className="hp-p1-body"
+      >
         Logout
-      </Link>
+      </div>
     </div>
   )
 
