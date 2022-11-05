@@ -19,8 +19,21 @@ const pages = [
   {
     id: 'employee',
     title: 'Karyawan',
-    navLink: '/pages/employee',
     icon: <TwoUsers set="curved" className="remix-icon" />,
+    children: [
+      {
+        id: 'employee',
+        title: 'Karyawan',
+        navLink: '/pages/employee',
+        icon: <TwoUsers set="curved" className="remix-icon" />,
+      },
+      {
+        id: 'family',
+        title: 'Kelola Keluarga',
+        navLink: '/pages/family',
+        icon: <TwoUsers set="curved" className="remix-icon" />,
+      },
+    ],
   },
   {
     id: 'attendance',

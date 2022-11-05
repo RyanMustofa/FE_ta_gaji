@@ -12,6 +12,11 @@ const PagesRoutes = [
     layout: 'VerticalLayout',
   },
   {
+    path: '/pages/family',
+    component: lazy(() => import('../../view/pages/family')),
+    layout: 'VerticalLayout',
+  },
+  {
     path: '/pages/attendance',
     component: lazy(() => import('../../view/pages/attendance')),
     layout: 'VerticalLayout',
