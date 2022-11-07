@@ -7,7 +7,7 @@ import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
 
-const endpoint = 'api/keluarga'
+const endpoint = 'api/absen'
 const endpointKaryawan = 'api/karyawan'
 
 export default function ReportAttendance() {
