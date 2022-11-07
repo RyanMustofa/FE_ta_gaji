@@ -3,7 +3,6 @@ import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
 import { Button, Card, Col, Form, Input, Row, Table } from 'antd'
 import { Delete, Edit } from 'react-iconly'
-import ModalFamily from './modal'
 import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
@@ -11,7 +10,7 @@ import moment from 'moment'
 const endpoint = 'api/keluarga'
 const endpointKaryawan = 'api/karyawan'
 
-export default function EmployeeFamily() {
+export default function ReportAttendance() {
   const [visible, setVisible] = useState(false)
   const [record, setRecord] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -86,7 +85,7 @@ export default function EmployeeFamily() {
         method: record ? 'put' : 'post',
         data: {
           ...res,
-          tgl_lahir: moment(res.tgl_lahir).format('YYYY-MM-DD')
+          tgl_lahir: moment(res.tgl_lahir).format('YYYY-MM-DD'),
         },
         params: {
           id: record ? record.id : undefined,
@@ -140,24 +139,24 @@ export default function EmployeeFamily() {
         meta?.page > 1 ? index + 1 + meta?.perPage : index + 1,
     },
     {
-      title: 'Karyawan',
+      title: 'Nama',
       dataIndex: ['karyawan', 'nama'],
       key: 'name',
     },
 
     {
-      title: 'Nama',
-      dataIndex: 'nama',
+      title: 'Jam Masuk',
+      dataIndex: 'jam_masuk',
       key: 'in',
     },
     {
-      title: 'Tanggal Lahir',
-      dataIndex: 'tgl_lahir',
+      title: 'Jam Keluar',
+      dataIndex: 'jam_pulang',
       key: 'out',
     },
     {
-      title: 'Jenis',
-      dataIndex: 'jenis',
+      title: 'Status Kehadiran',
+      dataIndex: 'status_kehadiran',
       key: 'remarks',
     },
   ]
@@ -201,15 +200,6 @@ export default function EmployeeFamily() {
   ]
   return (
     <>
-      <ModalFamily
-        visible={visible}
-        record={record}
-        form={form}
-        loading={loading}
-        onCancel={onCancel}
-        state={state}
-        onOk={onOk}
-      />
       <ModalDelete
         visible={visibleDelete}
         loading={loadingDelete}
@@ -224,12 +214,12 @@ export default function EmployeeFamily() {
           <Row gutter={[32, 32]}>
             <Breadcrumbs
               breadCrumbParent="Pages"
-              breadCrumbActive="Kelola Keluarga"
+              breadCrumbActive="Laporan Absensi"
             />
           </Row>
         </Col>
 
-        <PageTitle pageTitle="Kelola Keluarga" />
+        <PageTitle pageTitle="Laporan Absensi" />
         <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
