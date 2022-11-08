@@ -154,9 +154,9 @@ export default function ReportPayroll() {
       key: 'total_tunjangan',
     },
     {
-      title: 'Total Pengalian',
-      dataIndex: 'total_pengalian',
-      key: 'total_pengalian',
+      title: 'Total Pengurangan',
+      dataIndex: 'total_pengurangan',
+      key: 'total_pengurangan',
     },
     {
       title: 'Total Gaji',
@@ -221,6 +221,11 @@ export default function ReportPayroll() {
                     } else {
                       end_date = moment(item).format('YYYY-MM-DD')
                     }
+                  })
+                  setMeta({
+                    ...meta,
+                    start_date,
+                    end_date,
                   })
                 }}
               />

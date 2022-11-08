@@ -237,6 +237,11 @@ export default function ReportAttendance() {
                       end_date = moment(item).format('YYYY-MM-DD')
                     }
                   })
+                  setMeta({
+                    ...meta,
+                    start_date,
+                    end_date,
+                  })
                 }}
               />
             </Col>
