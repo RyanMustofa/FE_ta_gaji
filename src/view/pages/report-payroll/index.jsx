@@ -10,6 +10,7 @@ import moment from 'moment'
 const endpoint = 'api/kelola-gaji'
 const endpointKaryawan = 'api/karyawan'
 const endpointDownload = 'api/laporan/gaji'
+const endpointDownloadSlip = 'api/laporan/slip'
 
 export default function ReportPayroll() {
   const [visible, setVisible] = useState(false)
@@ -181,6 +182,25 @@ export default function ReportPayroll() {
       key: 'total_gaji',
     },
   ]
+
+  const handleDownloadSlip = async (rec) => {
+    await httpRequest({
+      method: 'get',
+      url: endpointDownloadSlip,
+      params: {
+        penggajian_id: rec.id,
+      },
+      responseType: 'blob',
+    }).then((res) => {
+      const objectUrl = URL.createObjectURL(new Blob([res.data]))
+      const link = document.createElement('a')
+      link.href = objectUrl
+      link.setAttribute('download', 'Slip Gaji.pdf')
+      document.body.appendChild(link)
+      link.click()
+    })
+  }
+
   const columns = [
     ...fieldColumns,
     {
@@ -194,6 +214,7 @@ export default function ReportPayroll() {
               style={{
                 cursor: 'pointer',
               }}
+              onClick={() => handleDownloadSlip(record)}
             />
           </>
         )
