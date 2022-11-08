@@ -7,7 +7,7 @@ import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
 
-const endpoint = 'api/gaji'
+const endpoint = 'api/kelola-gaji'
 const endpointKaryawan = 'api/karyawan'
 
 export default function ReportPayroll() {
