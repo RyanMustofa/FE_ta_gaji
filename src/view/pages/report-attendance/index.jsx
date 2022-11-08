@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
-import { Button, Card, Col, Form, Input, Row, Table } from 'antd'
+import { Button, Card, Col, DatePicker, Form, Input, Row, Table } from 'antd'
 import { Delete, Edit } from 'react-iconly'
 import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
@@ -221,6 +221,26 @@ export default function ReportAttendance() {
 
         <PageTitle pageTitle="Laporan Absensi" />
         <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
+          <Row gutter={[20]} style={{ marginBottom: 20 }}>
+            <Col span={12}>
+              <DatePicker.RangePicker
+                style={{
+                  width: '100%',
+                }}
+                onChange={(e) => {
+                  console.log(e)
+                  let start_date, end_date
+                  e.map((item, index) => {
+                    if (index === 0) {
+                      start_date = moment(item).format('YYYY-MM-DD')
+                    } else {
+                      end_date = moment(item).format('YYYY-MM-DD')
+                    }
+                  })
+                }}
+              />
+            </Col>
+          </Row>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
               <Button type="primary">Download</Button>

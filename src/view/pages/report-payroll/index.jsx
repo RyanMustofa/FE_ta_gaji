@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '@/layout/components/content/breadcrumbs'
 import PageTitle from '@/layout/components/content/page-title'
-import { Button, Card, Col, Form, Input, Row, Table } from 'antd'
-import { Delete, Edit } from 'react-iconly'
+import { Button, Card, Col, DatePicker, Form, Input, Row, Table } from 'antd'
+import { Delete, Edit, Send } from 'react-iconly'
 import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
@@ -166,41 +166,22 @@ export default function ReportPayroll() {
   ]
   const columns = [
     ...fieldColumns,
-    // {
-    //   title: '#',
-    //   width: 100,
-    //   render: (_, record, index) => {
-    //     return (
-    //       <>
-    //         <Edit
-    //           set="outlined"
-    //           style={{
-    //             cursor: 'pointer',
-    //           }}
-    //           onClick={() => {
-    //             setVisible(true)
-    //             setRecord(record)
-    //             form.setFieldsValue({
-    //               ...record,
-    //               jam_masuk: moment('2022-10-21T' + record.jam_masuk),
-    //               jam_pulang: moment('2022-10-21T' + record.jam_pulang),
-    //               tgl_absen: moment(record.tgl_absen),
-    //             })
-    //           }}
-    //         />
-    //         <Delete
-    //           set="outlined"
-    //           style={{ marginLeft: 5, cursor: 'pointer' }}
-    //           onClick={() => {
-    //             setRecord(record)
-    //             setVisibleDelete(true)
-    //           }}
-    //           primaryColor="#f50"
-    //         />
-    //       </>
-    //     )
-    //   },
-    // },
+    {
+      title: '#',
+      width: 100,
+      render: (_, record, index) => {
+        return (
+          <>
+            <Send
+              set="outlined"
+              style={{
+                cursor: 'pointer',
+              }}
+            />
+          </>
+        )
+      },
+    },
   ]
   return (
     <>
@@ -225,6 +206,26 @@ export default function ReportPayroll() {
 
         <PageTitle pageTitle="Laporan Penggajian" />
         <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
+          <Row gutter={[20]} style={{ marginBottom: 20 }}>
+            <Col span={12}>
+              <DatePicker.RangePicker
+                style={{
+                  width: '100%',
+                }}
+                onChange={(e) => {
+                  console.log(e)
+                  let start_date, end_date
+                  e.map((item, index) => {
+                    if (index === 0) {
+                      start_date = moment(item).format('YYYY-MM-DD')
+                    } else {
+                      end_date = moment(item).format('YYYY-MM-DD')
+                    }
+                  })
+                }}
+              />
+            </Col>
+          </Row>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
               <Button type="primary">Download</Button>
