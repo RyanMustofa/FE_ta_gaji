@@ -168,21 +168,25 @@ export default function Payroll() {
       dataIndex: ['karyawan', 'nama'],
       key: 'name',
     },
-
     {
-      title: 'Nama',
-      dataIndex: 'nama',
-      key: 'in',
+      title: 'Tanggal Penggajian',
+      dataIndex: 'tgl_penggajian',
+      key: 'tgl_penggajian',
     },
     {
-      title: 'Tanggal Lahir',
-      dataIndex: 'tgl_lahir',
-      key: 'out',
+      title: 'Total Tunjangan',
+      dataIndex: 'total_tunjangan',
+      key: 'total_tunjangan',
     },
     {
-      title: 'Jenis',
-      dataIndex: 'jenis',
-      key: 'remarks',
+      title: 'Total Pengalian',
+      dataIndex: 'total_pengalian',
+      key: 'total_pengalian',
+    },
+    {
+      title: 'Total Gaji',
+      dataIndex: 'total_gaji',
+      key: 'total_gaji',
     },
   ]
   const columns = [
