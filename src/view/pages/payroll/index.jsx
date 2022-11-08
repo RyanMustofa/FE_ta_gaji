@@ -179,9 +179,9 @@ export default function Payroll() {
       key: 'total_tunjangan',
     },
     {
-      title: 'Total Pengalian',
-      dataIndex: 'total_pengalian',
-      key: 'total_pengalian',
+      title: 'Total Pengurangan',
+      dataIndex: 'total_pengurangan',
+      key: 'total_pengurangan',
     },
     {
       title: 'Total Gaji',
