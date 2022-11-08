@@ -9,6 +9,7 @@ import moment from 'moment'
 
 const endpoint = 'api/run-payroll'
 const endpointList = 'api/kelola-gaji'
+const endpointKaryawan = 'api/karyawan'
 
 export default function Payroll() {
   const [visible, setVisible] = useState(false)
