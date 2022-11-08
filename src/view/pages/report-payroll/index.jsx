@@ -143,60 +143,64 @@ export default function ReportPayroll() {
       dataIndex: ['karyawan', 'nama'],
       key: 'name',
     },
-
     {
-      title: 'Nama',
-      dataIndex: 'nama',
-      key: 'in',
+      title: 'Tanggal Penggajian',
+      dataIndex: 'tgl_penggajian',
+      key: 'tgl_penggajian',
     },
     {
-      title: 'Tanggal Lahir',
-      dataIndex: 'tgl_lahir',
-      key: 'out',
+      title: 'Total Tunjangan',
+      dataIndex: 'total_tunjangan',
+      key: 'total_tunjangan',
     },
     {
-      title: 'Jenis',
-      dataIndex: 'jenis',
-      key: 'remarks',
+      title: 'Total Pengalian',
+      dataIndex: 'total_pengalian',
+      key: 'total_pengalian',
+    },
+    {
+      title: 'Total Gaji',
+      dataIndex: 'total_gaji',
+      key: 'total_gaji',
     },
   ]
   const columns = [
     ...fieldColumns,
-    {
-      title: '#',
-      width: 100,
-      render: (_, record, index) => {
-        return (
-          <>
-            <Edit
-              set="outlined"
-              style={{
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                setVisible(true)
-                setRecord(record)
-                form.setFieldsValue({
-                  ...record,
-                  jam_masuk: moment('2022-10-21T' + record.jam_masuk),
-                  jam_pulang: moment('2022-10-21T' + record.jam_pulang),
-                  tgl_absen: moment(record.tgl_absen),
-                })
-              }}
-            />
-            <Delete
-              set="outlined"
-              style={{ marginLeft: 5, cursor: 'pointer' }}
-              onClick={() => {
-                setRecord(record)
-                setVisibleDelete(true)
-              }}
-              primaryColor="#f50"
-            />
-          </>
-        )
-      },
-    },
+    // {
+    //   title: '#',
+    //   width: 100,
+    //   render: (_, record, index) => {
+    //     return (
+    //       <>
+    //         <Edit
+    //           set="outlined"
+    //           style={{
+    //             cursor: 'pointer',
+    //           }}
+    //           onClick={() => {
+    //             setVisible(true)
+    //             setRecord(record)
+    //             form.setFieldsValue({
+    //               ...record,
+    //               jam_masuk: moment('2022-10-21T' + record.jam_masuk),
+    //               jam_pulang: moment('2022-10-21T' + record.jam_pulang),
+    //               tgl_absen: moment(record.tgl_absen),
+    //             })
+    //           }}
+    //         />
+    //         <Delete
+    //           set="outlined"
+    //           style={{ marginLeft: 5, cursor: 'pointer' }}
+    //           onClick={() => {
+    //             setRecord(record)
+    //             setVisibleDelete(true)
+    //           }}
+    //           primaryColor="#f50"
+    //         />
+    //       </>
+    //     )
+    //   },
+    // },
   ]
   return (
     <>
@@ -223,16 +227,7 @@ export default function ReportPayroll() {
         <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setRecord(null)
-                  setVisible(true)
-                }}
-                loading={loadingAdd}
-              >
-                Tambah Keluarga
-              </Button>
+              <Button type="primary">Download</Button>
             </Col>
             <Col>
               <Input

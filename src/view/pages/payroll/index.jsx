@@ -191,41 +191,41 @@ export default function Payroll() {
   ]
   const columns = [
     ...fieldColumns,
-    {
-      title: '#',
-      width: 100,
-      render: (_, record, index) => {
-        return (
-          <>
-            <Edit
-              set="outlined"
-              style={{
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                setVisible(true)
-                setRecord(record)
-                form.setFieldsValue({
-                  ...record,
-                  jam_masuk: moment('2022-10-21T' + record.jam_masuk),
-                  jam_pulang: moment('2022-10-21T' + record.jam_pulang),
-                  tgl_absen: moment(record.tgl_absen),
-                })
-              }}
-            />
-            <Delete
-              set="outlined"
-              style={{ marginLeft: 5, cursor: 'pointer' }}
-              onClick={() => {
-                setRecord(record)
-                setVisibleDelete(true)
-              }}
-              primaryColor="#f50"
-            />
-          </>
-        )
-      },
-    },
+    // {
+    //   title: '#',
+    //   width: 100,
+    //   render: (_, record, index) => {
+    //     return (
+    //       <>
+    //         <Edit
+    //           set="outlined"
+    //           style={{
+    //             cursor: 'pointer',
+    //           }}
+    //           onClick={() => {
+    //             setVisible(true)
+    //             setRecord(record)
+    //             form.setFieldsValue({
+    //               ...record,
+    //               jam_masuk: moment('2022-10-21T' + record.jam_masuk),
+    //               jam_pulang: moment('2022-10-21T' + record.jam_pulang),
+    //               tgl_absen: moment(record.tgl_absen),
+    //             })
+    //           }}
+    //         />
+    //         <Delete
+    //           set="outlined"
+    //           style={{ marginLeft: 5, cursor: 'pointer' }}
+    //           onClick={() => {
+    //             setRecord(record)
+    //             setVisibleDelete(true)
+    //           }}
+    //           primaryColor="#f50"
+    //         />
+    //       </>
+    //     )
+    //   },
+    // },
   ]
   return (
     <>
