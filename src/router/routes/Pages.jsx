@@ -12,6 +12,11 @@ const PagesRoutes = [
     layout: 'VerticalLayout',
   },
   {
+    path: '/pages/payroll',
+    component: lazy(() => import('../../view/pages/payroll')),
+    layout: 'VerticalLayout',
+  },
+  {
     path: '/pages/report-payroll',
     component: lazy(() => import('../../view/pages/report-payroll')),
     layout: 'VerticalLayout',
