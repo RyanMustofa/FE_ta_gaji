@@ -9,6 +9,7 @@ import moment from 'moment'
 
 const endpoint = 'api/kelola-gaji'
 const endpointKaryawan = 'api/karyawan'
+const endpointDownload = 'api/laporan/gaji'
 
 export default function ReportPayroll() {
   const [visible, setVisible] = useState(false)
@@ -104,6 +105,22 @@ export default function ReportPayroll() {
           setLoading(false)
           setLoadingAdd(false)
         })
+    })
+  }
+
+  const handleDownload = async () => {
+    await httpRequest({
+      method: 'get',
+      url: endpointDownload,
+      params: meta,
+      responseType: 'blob',
+    }).then((res) => {
+      const objectUrl = URL.createObjectURL(new Blob([res.data]))
+      const link = document.createElement('a')
+      link.href = objectUrl
+      link.setAttribute('download', 'Laporan Absensi.pdf')
+      document.body.appendChild(link)
+      link.click()
     })
   }
 
@@ -233,7 +250,9 @@ export default function ReportPayroll() {
           </Row>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
-              <Button type="primary">Download</Button>
+              <Button type="primary" onClick={handleDownload}>
+                Download
+              </Button>
             </Col>
             <Col>
               <Input

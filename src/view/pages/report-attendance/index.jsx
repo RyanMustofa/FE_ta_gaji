@@ -9,6 +9,7 @@ import moment from 'moment'
 
 const endpoint = 'api/absen'
 const endpointKaryawan = 'api/karyawan'
+const endpointDownload = 'api/laporan/absen'
 
 export default function ReportAttendance() {
   const [visible, setVisible] = useState(false)
@@ -76,6 +77,22 @@ export default function ReportAttendance() {
     getEmployee()
     getData()
   }, [meta])
+
+  const handleDownload = async () => {
+    await httpRequest({
+      method: 'get',
+      url: endpointDownload,
+      params: meta,
+      responseType: 'blob',
+    }).then((res) => {
+      const objectUrl = URL.createObjectURL(new Blob([res.data]))
+      const link = document.createElement('a')
+      link.href = objectUrl
+      link.setAttribute('download', 'Laporan Absensi.pdf')
+      document.body.appendChild(link)
+      link.click()
+    })
+  }
 
   const onOk = () => {
     form.validateFields().then(async (res) => {
@@ -248,7 +265,9 @@ export default function ReportAttendance() {
           </Row>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Col>
-              <Button type="primary">Download</Button>
+              <Button type="primary" onClick={handleDownload}>
+                Download
+              </Button>
             </Col>
             <Col>
               <Input
