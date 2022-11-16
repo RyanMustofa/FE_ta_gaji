@@ -215,7 +215,7 @@ export default function ComponentPayroll() {
           </Row>
           <Table
             columns={columns}
-            dataSource={[data]}
+            dataSource={data}
             onChange={(pagination, filters, sorter) => {
               setMeta({
                 ...meta,
