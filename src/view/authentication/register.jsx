@@ -15,6 +15,9 @@ export default function SignUp() {
       push('/')
     })
   }
+  if(window?.localStorage.getItem('token')){
+    return <Redirect to="/" />
+  }
   return (
     <Row gutter={[32, 0]} className="hp-authentication-page">
       <LeftContent />

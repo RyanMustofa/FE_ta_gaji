@@ -7,12 +7,13 @@ import ModalPosition from './modal'
 import ModalDelete from '@/view/components/delete-modal'
 import httpRequest from '@/utils/axios'
 import moment from 'moment'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const endpoint = 'api/jabatan'
 const endpointKomponen = 'api/komponen'
 
 export default function Position() {
+  const {push} = useHistory()
   const [visible, setVisible] = useState(false)
   const [record, setRecord] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -265,6 +266,20 @@ export default function Position() {
                   }}
                 >
                   Kelola Komponen
+                </Button>
+              </Col>
+              <Col
+                style={{
+                  marginLeft: 10,
+                }}
+              >
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    push('/pages/component-payroll')
+                  }}
+                >
+                  List Komponen
                 </Button>
               </Col>
               <Col

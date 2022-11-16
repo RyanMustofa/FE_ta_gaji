@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory,Redirect } from 'react-router-dom'
 import { Row, Col, Form, Input, Button } from 'antd'
 import httpRequest from '@/utils/axios'
 
@@ -28,6 +28,9 @@ export default function Login() {
           setLoading(false)
         })
     })
+  }
+  if(window?.localStorage.getItem('token')){
+    return <Redirect to="/" />
   }
   return (
     <Row gutter={[32, 0]} className="hp-authentication-page">

@@ -7,6 +7,11 @@ const PagesRoutes = [
     layout: 'VerticalLayout',
   },
   {
+    path: '/pages/component-payroll',
+    component: lazy(() => import('../../view/pages/Component/index.jsx')),
+    layout: 'VerticalLayout',
+  },
+  {
     path: '/pages/report-attendance',
     component: lazy(() => import('../../view/pages/report-attendance')),
     layout: 'VerticalLayout',
