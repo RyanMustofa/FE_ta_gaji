@@ -8,8 +8,8 @@ import {
   Row,
   Select,
   TimePicker,
-} from 'antd'
-import React from 'react'
+} from "antd";
+import React from "react";
 
 export default function ModalAttendance({
   form,
@@ -20,13 +20,31 @@ export default function ModalAttendance({
   visible,
   state,
 }) {
+  const dataKehadiran = [
+    {
+      id: 1,
+      nama: "Hadir",
+    },
+    {
+      id: 2,
+      nama: "Sakit",
+    },
+    {
+      id: 3,
+      nama: "Ijin",
+    },
+    {
+      id: 4,
+      nama: "Alpha",
+    },
+  ];
   return (
     <>
       <Modal
-        title={`${record ? 'Edit' : 'Tambah'} Data Absensi`}
+        title={`${record ? "Edit" : "Tambah"} Data Absensi`}
         visible={visible}
         style={{
-          marginTop: '-70px',
+          marginTop: "-70px",
         }}
         confirmLoading={loading}
         onCancel={onCancel}
@@ -34,9 +52,9 @@ export default function ModalAttendance({
       >
         <div
           style={{
-            height: 'calc(100vh - 300px)',
-            overflowY: 'scroll',
-            overflowX: 'hidden',
+            height: "calc(100vh - 300px)",
+            overflowY: "scroll",
+            overflowX: "hidden",
           }}
         >
           <Form form={form} layout="vertical">
@@ -48,11 +66,11 @@ export default function ModalAttendance({
                   rules={[
                     {
                       required: true,
-                      message: 'Jam Masuk tidak boleh kosong',
+                      message: "Jam Masuk tidak boleh kosong",
                     },
                   ]}
                 >
-                  <TimePicker style={{ width: '100%' }} />
+                  <TimePicker style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -62,11 +80,11 @@ export default function ModalAttendance({
                   rules={[
                     {
                       required: true,
-                      message: 'Jam Keluar tidak boleh kosong',
+                      message: "Jam Keluar tidak boleh kosong",
                     },
                   ]}
                 >
-                  <TimePicker style={{ width: '100%' }} />
+                  <TimePicker style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -76,7 +94,7 @@ export default function ModalAttendance({
                   rules={[
                     {
                       required: true,
-                      message: 'ID Karyawan tidak boleh kosong',
+                      message: "ID Karyawan tidak boleh kosong",
                     },
                   ]}
                 >
@@ -86,7 +104,7 @@ export default function ModalAttendance({
                         <Select.Option value={el.id} key={el.id}>
                           {el.nama}
                         </Select.Option>
-                      )
+                      );
                     })}
                   </Select>
                 </Form.Item>
@@ -98,13 +116,13 @@ export default function ModalAttendance({
                   rules={[
                     {
                       required: true,
-                      message: 'Tanggal Absensi tidak boleh kosong',
+                      message: "Tanggal Absensi tidak boleh kosong",
                     },
                   ]}
                 >
                   <DatePicker
                     getPopupContainer={(parent) => parent.parentNode}
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                     format="DD-MM-YYYY"
                   />
                 </Form.Item>
@@ -112,15 +130,28 @@ export default function ModalAttendance({
               <Col span={24}>
                 <Form.Item
                   name="status_kehadiran"
+                  label="Status Kehadiran"
                   rules={[
                     {
                       required: true,
-                      message: 'Status kehadiran tidak boleh kosong',
+                      message: "Status Kehadiran tidak boleh kosong",
                     },
                   ]}
-                  label="Status Kehadiran"
                 >
-                  <Input.TextArea rows={3} placeholder="Status Kehadiran" />
+                  <Select placeholder="Status Kehadiran">
+                    {dataKehadiran.map((el) => {
+                      return (
+                        <Select.Option key={el.id} value={el.id}>
+                          {el.nama}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item name="keterangan" label="Keterangan">
+                  <Input.TextArea rows={3} placeholder="Keterangan" />
                 </Form.Item>
               </Col>
             </Row>
@@ -128,5 +159,5 @@ export default function ModalAttendance({
         </div>
       </Modal>
     </>
-  )
+  );
 }

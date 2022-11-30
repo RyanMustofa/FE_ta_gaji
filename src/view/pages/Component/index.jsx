@@ -7,6 +7,7 @@ import ModalComponent from "./modal";
 import ModalDelete from "@/view/components/delete-modal";
 import httpRequest from "@/utils/axios";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 const endpoint = "api/komponen";
 
@@ -76,6 +77,8 @@ export default function ComponentPayroll() {
           form.resetFields();
           setRecord(null);
           getData();
+          const { push } = useHistory();
+          push("pages/component-payroll");
         })
         .catch((error) => {
           form.resetFields();
@@ -197,7 +200,17 @@ export default function ComponentPayroll() {
         <PageTitle pageTitle="Komponent Payroll" />
         <Card style={{ marginTop: 20, width: "100%", padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
-            <Col></Col>
+            <Col>
+              <Button
+                type="primary"
+                onClick={() => {
+                  setVisible(true);
+                  setRecord(null);
+                }}
+              >
+                Tambah Komponen
+              </Button>
+            </Col>
             <Col>
               <Input
                 onChange={(e) => {

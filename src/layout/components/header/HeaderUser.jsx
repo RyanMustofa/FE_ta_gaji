@@ -1,35 +1,35 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-import { Dropdown, Col, Avatar, Divider, Row } from 'antd'
-import { Calendar, Game, People } from 'react-iconly'
-import { useHistory } from 'react-router-dom'
-import avatarImg from '../../../assets/images/memoji/memoji-1.png'
+import { Dropdown, Col, Avatar, Divider, Row } from "antd";
+import { Calendar, Game, People } from "react-iconly";
+import { useHistory } from "react-router-dom";
+import avatarImg from "../../../assets/images/memoji/memoji-1.png";
 
 export default function HeaderUser() {
-  const { push } = useHistory()
+  const { push } = useHistory();
   const handleLogout = () => {
-    window.localStorage.clear()
-    push('/login')
-  }
+    window.localStorage.clear();
+    push("/login");
+  };
   const menu = (
     <div
       className="hp-border-radius hp-border-1 hp-border-color-black-40 hp-bg-black-0 hp-bg-dark-100 hp-border-color-dark-80 hp-p-24 hp-mt-12"
       style={{ width: 260 }}
     >
-      <span className="hp-d-block h5 hp-text-color-black-100 hp-text-color-dark-0 hp-mb-8">
+      {/* <span className="hp-d-block h5 hp-text-color-black-100 hp-text-color-dark-0 hp-mb-8">
         Profile Settings
-      </span>
+      </span> */}
 
-      <Link
+      {/* <Link
         to="/"
         className="hp-p1-body hp-text-color-primary-1 hp-text-color-dark-primary-2 hp-hover-text-color-primary-2"
       >
         View Profile
-      </Link>
+      </Link> */}
 
-      <Divider className="hp-mt-16 hp-mb-6" />
+      {/* <Divider className="hp-mt-16 hp-mb-6" /> */}
 
-      <Row>
+      {/* <Row>
         <Col span={24}>
           <Link
             to="/"
@@ -65,21 +65,21 @@ export default function HeaderUser() {
             <span className="hp-ml-8">Help Desk</span>
           </Link>
         </Col>
-      </Row>
+      </Row> */}
 
-      <Divider className="hp-mb-16 hp-mt-6" />
+      {/* <Divider className="hp-mb-16 hp-mt-6" /> */}
 
       <div
         onClick={handleLogout}
         style={{
-          cursor: 'pointer',
+          cursor: "pointer",
         }}
         className="hp-p1-body"
       >
         Logout
       </div>
     </div>
-  )
+  );
 
   return (
     <Col>
@@ -87,5 +87,5 @@ export default function HeaderUser() {
         <Avatar src={avatarImg} size={40} className="hp-cursor-pointer" />
       </Dropdown>
     </Col>
-  )
+  );
 }

@@ -1,76 +1,76 @@
-import React, { useEffect, useState } from 'react'
-import Breadcrumbs from '@/layout/components/content/breadcrumbs'
-import PageTitle from '@/layout/components/content/page-title'
-import { Button, Card, Col, Form, Input, Row, Table } from 'antd'
-import { Delete, Edit } from 'react-iconly'
-import ModalPosition from './modal'
-import ModalDelete from '@/view/components/delete-modal'
-import httpRequest from '@/utils/axios'
-import moment from 'moment'
-import { Link, useHistory } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import Breadcrumbs from "@/layout/components/content/breadcrumbs";
+import PageTitle from "@/layout/components/content/page-title";
+import { Button, Card, Col, Form, Input, Row, Table } from "antd";
+import { Delete, Edit } from "react-iconly";
+import ModalPosition from "./modal";
+import ModalDelete from "@/view/components/delete-modal";
+import httpRequest from "@/utils/axios";
+import moment from "moment";
+import { Link, useHistory } from "react-router-dom";
 
-const endpoint = 'api/jabatan'
-const endpointKomponen = 'api/komponen'
+const endpoint = "api/jabatan";
+const endpointKomponen = "api/komponen";
 
 export default function Position() {
-  const {push} = useHistory()
-  const [visible, setVisible] = useState(false)
-  const [record, setRecord] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [visibleDelete, setVisibleDelete] = useState(false)
-  const [loadingDelete, setLoadingDelete] = useState(false)
-  const [antLoading, setAntLoading] = useState(false)
-  const [form] = Form.useForm()
-  const [type, setType] = useState('jabatan')
+  const { push } = useHistory();
+  const [visible, setVisible] = useState(false);
+  const [record, setRecord] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [visibleDelete, setVisibleDelete] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [antLoading, setAntLoading] = useState(false);
+  const [form] = Form.useForm();
+  const [type, setType] = useState("jabatan");
   const [meta, setMeta] = useState({
-    dir: 'desc',
+    dir: "desc",
     offset: 0,
-    order: 'created_at',
+    order: "created_at",
     page: 1,
     perPage: 5,
-    search: '',
+    search: "",
     total: 1,
     totalPage: 1,
-  })
-  const [total, setTotal] = useState(0)
-  const [data, setData] = useState([])
+  });
+  const [total, setTotal] = useState(0);
+  const [data, setData] = useState([]);
 
   const state = {
     type,
-  }
+  };
 
   const getData = async () => {
-    setAntLoading(true)
+    setAntLoading(true);
     await httpRequest({
       url: endpoint,
-      method: 'get',
+      method: "get",
       params: meta,
     })
       .then((response) => {
-        setTotal(response?.data?.meta?.total)
+        setTotal(response?.data?.meta?.total);
         let data = response?.data?.results.map((el) => {
           return {
             ...el,
             key: el.id,
-          }
-        })
-        setData(data)
+          };
+        });
+        setData(data);
       })
       .finally(() => {
-        setAntLoading(false)
-      })
-  }
+        setAntLoading(false);
+      });
+  };
 
   useEffect(() => {
-    getData()
-  }, [meta])
+    getData();
+  }, [meta]);
 
   const onOk = () => {
     form.validateFields().then(async (res) => {
-      setLoading(true)
+      setLoading(true);
       await httpRequest({
-        url: type === 'jabatan' ? endpoint : endpointKomponen,
-        method: record ? 'put' : 'post',
+        url: type === "jabatan" ? endpoint : endpointKomponen,
+        method: record ? "put" : "post",
         data: {
           ...res,
         },
@@ -79,66 +79,66 @@ export default function Position() {
         },
       })
         .then((response) => {
-          setVisible(false)
-          form.resetFields()
-          setRecord(null)
-          getData()
+          setVisible(false);
+          form.resetFields();
+          setRecord(null);
+          getData();
         })
         .catch((error) => {
-          form.resetFields()
+          form.resetFields();
         })
         .finally(() => {
-          setLoading(false)
-        })
-    })
-  }
+          setLoading(false);
+        });
+    });
+  };
 
   const onCancel = () => {
-    setVisible(false)
-    setRecord(null)
-    form.resetFields()
-  }
+    setVisible(false);
+    setRecord(null);
+    form.resetFields();
+  };
 
   const handleDelete = async () => {
-    setLoadingDelete(true)
+    setLoadingDelete(true);
     await httpRequest({
       url: endpoint,
-      method: 'delete',
+      method: "delete",
       params: {
         id: record?.id,
       },
     })
       .then((res) => {
-        getData()
-        setVisibleDelete(false)
+        getData();
+        setVisibleDelete(false);
       })
       .finally(() => {
-        setLoadingDelete(false)
-      })
-  }
+        setLoadingDelete(false);
+      });
+  };
 
   const fieldColumns = [
     {
-      title: 'No',
+      title: "No",
       render: (_, record, index) =>
         meta?.page > 1 ? index + 1 + meta?.perPage : index + 1,
     },
 
     {
-      title: 'Nama',
-      dataIndex: 'nama',
-      key: 'name',
+      title: "Nama",
+      dataIndex: "nama",
+      key: "name",
     },
     {
-      title: 'Nama',
-      dataIndex: 'tipe',
-      key: 'name',
+      title: "Nama",
+      dataIndex: "tipe",
+      key: "name",
     },
-  ]
+  ];
   const columns = [
     ...fieldColumns,
     {
-      title: '#',
+      title: "#",
       width: 100,
       render: (_, record, index) => {
         return (
@@ -146,51 +146,51 @@ export default function Position() {
             <Edit
               set="outlined"
               style={{
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
               onClick={() => {
-                setVisible(true)
-                setType('jabatan')
-                setRecord(record)
+                setVisible(true);
+                setType("jabatan");
+                setRecord(record);
                 form.setFieldsValue({
                   ...record,
                   tgl_lahir: moment(record.tgl_lahir),
                   tgl_masuk_kerja: moment(record.tgl_masuk),
-                })
+                });
               }}
             />
             <Delete
               set="outlined"
-              style={{ marginLeft: 5, cursor: 'pointer' }}
+              style={{ marginLeft: 5, cursor: "pointer" }}
               onClick={() => {
-                setRecord(record)
-                setVisibleDelete(true)
+                setRecord(record);
+                setVisibleDelete(true);
               }}
               primaryColor="#f50"
             />
           </>
-        )
+        );
       },
     },
-  ]
+  ];
 
   const fieldColumnsExpanded = [
     {
-      title: 'Nama',
-      dataIndex: ['komponen', 'nama'],
-      key: 'nama',
+      title: "Nama",
+      dataIndex: ["komponen", "nama"],
+      key: "nama",
     },
     {
-      title: 'Tipe',
-      dataIndex: ['komponen', 'tipe'],
-      key: 'tipe',
+      title: "Tipe",
+      dataIndex: ["komponen", "tipe"],
+      key: "tipe",
     },
     {
-      title: 'Jumlah',
-      dataIndex: 'jumlah',
-      key: 'jumlah',
+      title: "Jumlah",
+      dataIndex: "jumlah",
+      key: "jumlah",
     },
-  ]
+  ];
 
   const expandedRowRender = (record) => {
     return (
@@ -199,12 +199,12 @@ export default function Position() {
         pagination={false}
         dataSource={record.tunjangans.concat(record.potongans)}
       />
-    )
-  }
+    );
+  };
 
   const expandable = {
     expandedRowRender,
-  }
+  };
 
   return (
     <>
@@ -221,8 +221,8 @@ export default function Position() {
         visible={visibleDelete}
         loading={loadingDelete}
         onCancel={() => {
-          setVisibleDelete(false)
-          setRecord(null)
+          setVisibleDelete(false);
+          setRecord(null);
         }}
         onOk={handleDelete}
       />
@@ -237,16 +237,16 @@ export default function Position() {
         </Col>
 
         <PageTitle pageTitle="Data Jabatan" />
-        <Card style={{ marginTop: 20, width: '100%', padding: 10 }}>
+        <Card style={{ marginTop: 20, width: "100%", padding: 10 }}>
           <Row justify="space-between" style={{ marginBottom: 20 }}>
             <Row>
               <Col>
                 <Button
                   type="primary"
                   onClick={() => {
-                    setVisible(true)
-                    setRecord(null)
-                    setType('jabatan')
+                    setVisible(true);
+                    setRecord(null);
+                    setType("jabatan");
                   }}
                 >
                   Tambah Jabatan
@@ -257,7 +257,7 @@ export default function Position() {
                   marginLeft: 10,
                 }}
               >
-                <Button
+                {/* <Button
                   type="primary"
                   onClick={() => {
                     setVisible(true)
@@ -266,7 +266,7 @@ export default function Position() {
                   }}
                 >
                   Kelola Komponen
-                </Button>
+                </Button> */}
               </Col>
               <Col
                 style={{
@@ -276,7 +276,7 @@ export default function Position() {
                 <Button
                   type="primary"
                   onClick={() => {
-                    push('/pages/component-payroll')
+                    push("/pages/component-payroll");
                   }}
                 >
                   List Komponen
@@ -299,8 +299,8 @@ export default function Position() {
                     setMeta({
                       ...meta,
                       search: e.target.value,
-                    })
-                  }, 500)
+                    });
+                  }, 500);
                 }}
                 allowClear
                 placeholder="Search"
@@ -315,7 +315,7 @@ export default function Position() {
                 ...meta,
                 page: pagination.current,
                 perPage: pagination.pageSize,
-              })
+              });
             }}
             expandable={expandable}
             pagination={{
@@ -328,5 +328,5 @@ export default function Position() {
         </Card>
       </Row>
     </>
-  )
+  );
 }
