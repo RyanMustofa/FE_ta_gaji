@@ -9,9 +9,9 @@ import {
   Row,
   Select,
   Upload,
-} from 'antd'
-import { Delete, Upload as IconUpload } from 'react-iconly'
-import React from 'react'
+} from "antd";
+import { Delete, Upload as IconUpload } from "react-iconly";
+import React from "react";
 
 export default function ModalEmployee({
   form,
@@ -25,10 +25,10 @@ export default function ModalEmployee({
   return (
     <>
       <Modal
-        title={`${record ? 'Edit' : 'Tambah'} Data Pengguna`}
+        title={`${record ? "Edit" : "Tambah"} Data Pengguna`}
         visible={visible}
         style={{
-          marginTop: '-70px',
+          marginTop: "-70px",
         }}
         confirmLoading={loading}
         onCancel={onCancel}
@@ -36,9 +36,9 @@ export default function ModalEmployee({
       >
         <div
           style={{
-            height: 'calc(100vh - 300px)',
-            overflowY: 'scroll',
-            overflowX: 'hidden',
+            height: "calc(100vh - 300px)",
+            overflowY: "scroll",
+            overflowX: "hidden",
           }}
         >
           <Form form={form} layout="vertical">
@@ -46,22 +46,22 @@ export default function ModalEmployee({
               <Col span={24}>
                 <div
                   style={{
-                    position: 'relative',
+                    position: "relative",
                   }}
                 >
                   <Upload.Dragger
                     fileList={state.fileList}
                     showUploadList={false}
                     onChange={(info) => {
-                      let fileReader = new FileReader()
-                      fileReader.readAsDataURL(info.file.originFileObj)
+                      let fileReader = new FileReader();
+                      fileReader.readAsDataURL(info.file.originFileObj);
                       fileReader.onloadend = () => {
                         state.setBaseUrl({
                           FileList: info.fileList,
                           status: true,
                           url: fileReader.result,
-                        })
-                      }
+                        });
+                      };
                     }}
                   >
                     {state.baseUrl.status ? (
@@ -86,17 +86,17 @@ export default function ModalEmployee({
                   {state.baseUrl.status ? (
                     <div
                       style={{
-                        position: 'absolute',
+                        position: "absolute",
                         top: 10,
-                        cursor: 'pointer',
+                        cursor: "pointer",
                         right: 10,
                       }}
                       onClick={() => {
                         state.setBaseUrl({
                           FileList: [],
                           status: false,
-                          url: '',
-                        })
+                          url: "",
+                        });
                       }}
                     >
                       <Delete set="curved" primaryColor="#f50" />
@@ -111,7 +111,7 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Nama tidak boleh kosong',
+                      message: "Nama tidak boleh kosong",
                     },
                   ]}
                 >
@@ -125,7 +125,7 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Username tidak boleh kosong',
+                      message: "Username tidak boleh kosong",
                     },
                   ]}
                 >
@@ -139,7 +139,7 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Email tidak boleh kosong',
+                      message: "Email tidak boleh kosong",
                     },
                   ]}
                 >
@@ -153,7 +153,7 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Role tidak boleh kosong',
+                      message: "Role tidak boleh kosong",
                     },
                   ]}
                 >
@@ -173,7 +173,7 @@ export default function ModalEmployee({
                       : [
                           {
                             required: true,
-                            message: 'Password tidak boleh kosong',
+                            message: "Password tidak boleh kosong",
                           },
                         ]
                   }
@@ -186,5 +186,5 @@ export default function ModalEmployee({
         </div>
       </Modal>
     </>
-  )
+  );
 }

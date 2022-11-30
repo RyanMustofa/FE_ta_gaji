@@ -8,8 +8,8 @@ import {
   Row,
   Select,
   TimePicker,
-} from 'antd'
-import React from 'react'
+} from "antd";
+import React from "react";
 
 export default function ModalFamily({
   form,
@@ -20,13 +20,25 @@ export default function ModalFamily({
   visible,
   state,
 }) {
+  const dataJenis = [
+    {
+      id: 1,
+      nama: "Anak",
+      display: "Anak",
+    },
+    {
+      id: 2,
+      nama: "Istri",
+      display: "Istri",
+    },
+  ];
   return (
     <>
       <Modal
-        title={`${record ? 'Edit' : 'Tambah'} Data Keluarga`}
+        title={`${record ? "Edit" : "Tambah"} Data Keluarga`}
         visible={visible}
         style={{
-          marginTop: '-70px',
+          marginTop: "-70px",
         }}
         confirmLoading={loading}
         onCancel={onCancel}
@@ -34,9 +46,9 @@ export default function ModalFamily({
       >
         <div
           style={{
-            height: 'calc(100vh - 300px)',
-            overflowY: 'scroll',
-            overflowX: 'hidden',
+            height: "calc(100vh - 300px)",
+            overflowY: "scroll",
+            overflowX: "hidden",
           }}
         >
           <Form form={form} layout="vertical">
@@ -44,11 +56,11 @@ export default function ModalFamily({
               <Col span={12}>
                 <Form.Item
                   name="karyawan_id"
-                  label="ID Karyawan"
+                  label="Nama Karyawan"
                   rules={[
                     {
                       required: true,
-                      message: 'ID Karyawan tidak boleh kosong',
+                      message: "Nama Karyawan tidak boleh kosong",
                     },
                   ]}
                 >
@@ -58,7 +70,7 @@ export default function ModalFamily({
                         <Select.Option value={el.id} key={el.id}>
                           {el.nama}
                         </Select.Option>
-                      )
+                      );
                     })}
                   </Select>
                 </Form.Item>
@@ -66,29 +78,37 @@ export default function ModalFamily({
               <Col span={12}>
                 <Form.Item
                   name="nama"
-                  label="Nama"
+                  label="Nama Keluarga"
                   rules={[
                     {
                       required: true,
-                      message: 'Nama tidak boleh kosong',
+                      message: "Nama Keluarga tidak boleh kosong",
                     },
                   ]}
                 >
-                  <Input placeholder="Nama" />
+                  <Input placeholder="Nama Keluarga" />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
                   name="jenis"
+                  label="Jenis"
                   rules={[
                     {
                       required: true,
-                      message: 'Jenis tidak boleh kosong',
+                      message: "Jenis tidak boleh kosong",
                     },
                   ]}
-                  label="Jenis"
                 >
-                  <Input placeholder="Jenis" />
+                  <Select placeholder="Jenis">
+                    {dataJenis.map((el) => {
+                      return (
+                        <Select.Option key={el.id} value={el.nama}>
+                          {el.display}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -97,12 +117,12 @@ export default function ModalFamily({
                   rules={[
                     {
                       required: true,
-                      message: 'Tanggal Lahir tidak boleh kosong',
+                      message: "Tanggal Lahir tidak boleh kosong",
                     },
                   ]}
                   label="Tanggal Lahir"
                 >
-                  <DatePicker style={{ width: '100%' }} />
+                  <DatePicker style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
             </Row>
@@ -110,5 +130,5 @@ export default function ModalFamily({
         </div>
       </Modal>
     </>
-  )
+  );
 }

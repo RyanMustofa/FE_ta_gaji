@@ -1,5 +1,17 @@
-import { Col, DatePicker, Form, Input, Modal, Radio, Row, Select } from 'antd'
-import React from 'react'
+import {
+  Col,
+  DatePicker,
+  Form,
+  Image,
+  Input,
+  Modal,
+  Radio,
+  Row,
+  Select,
+  Upload,
+} from "antd";
+import React from "react";
+import { Delete, Upload as IconUpload } from "react-iconly";
 
 export default function ModalEmployee({
   form,
@@ -13,10 +25,10 @@ export default function ModalEmployee({
   return (
     <>
       <Modal
-        title={`${record ? 'Edit' : 'Tambah'} Data Karyawan`}
+        title={`${record ? "Edit" : "Tambah"} Data Karyawan`}
         visible={visible}
         style={{
-          marginTop: '-70px',
+          marginTop: "-70px",
         }}
         confirmLoading={loading}
         onCancel={onCancel}
@@ -24,14 +36,14 @@ export default function ModalEmployee({
       >
         <div
           style={{
-            height: 'calc(100vh - 300px)',
-            overflowY: 'scroll',
-            overflowX: 'hidden',
+            height: "calc(100vh - 300px)",
+            overflowY: "scroll",
+            overflowX: "hidden",
           }}
         >
           <Form form={form} layout="vertical">
             <Row gutter={[20, 20]}>
-              <Col span={12}>
+              {/* <Col span={12}>
                 <Form.Item
                   name="id_karyawan"
                   label="ID Karyawan"
@@ -44,19 +56,61 @@ export default function ModalEmployee({
                 >
                   <Input placeholder="ID Karyawan" />
                 </Form.Item>
-              </Col>
-              <Col span={12}>
+              </Col> */}
+              <Col span={24}>
                 <Form.Item
                   name="nama"
                   label="Nama"
                   rules={[
                     {
                       required: true,
-                      message: 'Nama tidak boleh kosong',
+                      message: "Nama tidak boleh kosong",
                     },
                   ]}
                 >
                   <Input placeholder="Nama" />
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  name="no_sk"
+                  label="No SK"
+                  rules={[
+                    {
+                      required: true,
+                      message: "NO SK boleh kosong",
+                    },
+                  ]}
+                >
+                  <Input placeholder="NO SK" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="no_rek"
+                  label="No Rekening"
+                  rules={[
+                    {
+                      required: true,
+                      message: "No Rekening boleh kosong",
+                    },
+                  ]}
+                >
+                  <Input placeholder="No Rekening" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="nama_bank"
+                  label="Nama Bank"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Nama Bank boleh kosong",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nama Bank" />
                 </Form.Item>
               </Col>
               <Col span={24}>
@@ -66,7 +120,7 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Jabatan tidak boleh kosong',
+                      message: "Jabatan tidak boleh kosong",
                     },
                   ]}
                 >
@@ -76,7 +130,7 @@ export default function ModalEmployee({
                         <Select.Option key={el.id} value={el.id}>
                           {el.nama}
                         </Select.Option>
-                      )
+                      );
                     })}
                   </Select>
                 </Form.Item>
@@ -88,7 +142,7 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Jenis tidak boleh kosong',
+                      message: "Jenis tidak boleh kosong",
                     },
                   ]}
                 >
@@ -106,14 +160,14 @@ export default function ModalEmployee({
                   rules={[
                     {
                       validator: (rule, value, cb) => {
-                        let values = value || null
+                        let values = value || null;
                         if (!values) {
-                          return cb('No. HP tidak boleh kosong')
+                          return cb("No. HP tidak boleh kosong");
                         }
                         if (!Number(values)) {
-                          return cb('No. HP harus angka')
+                          return cb("No. HP harus angka");
                         }
-                        return cb()
+                        return cb();
                       },
                     },
                   ]}
@@ -128,11 +182,11 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Tgl Masuk Kerja tidak boleh kosong',
+                      message: "Tgl Masuk Kerja tidak boleh kosong",
                     },
                   ]}
                 >
-                  <DatePicker format={'DD-MM-YYYY'} style={{ width: '100%' }} />
+                  <DatePicker format={"DD-MM-YYYY"} style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -142,11 +196,11 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Tanggal Lahir tidak boleh kosong',
+                      message: "Tanggal Lahir tidak boleh kosong",
                     },
                   ]}
                 >
-                  <DatePicker format={'DD-MM-YYYY'} style={{ width: '100%' }} />
+                  <DatePicker format={"DD-MM-YYYY"} style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
               {/* <Col span={12}>
@@ -202,17 +256,78 @@ export default function ModalEmployee({
                   rules={[
                     {
                       required: true,
-                      message: 'Alamat tidak boleh kosong',
+                      message: "Alamat tidak boleh kosong",
                     },
                   ]}
                 >
                   <Input.TextArea rows={3} placeholder="Alamat" />
                 </Form.Item>
               </Col>
+              <Col span={24}>
+                <div
+                  style={{
+                    position: "relative",
+                  }}
+                >
+                  <Upload.Dragger
+                    fileList={state.fileList}
+                    showUploadList={false}
+                    onChange={(info) => {
+                      let fileReader = new FileReader();
+                      fileReader.readAsDataURL(info.file.originFileObj);
+                      fileReader.onloadend = () => {
+                        state.setBaseUrl({
+                          FileList: info.fileList,
+                          status: true,
+                          url: fileReader.result,
+                        });
+                      };
+                    }}
+                  >
+                    {state.baseUrl.status ? (
+                      <>
+                        <Image src={state.baseUrl.url} />
+                      </>
+                    ) : (
+                      <>
+                        <p className="ant-upload-drag-icon">
+                          <IconUpload style={{ width: 50 }} set="curved" />
+                        </p>
+                        <p className="ant-upload-text">
+                          Click or drag file to this area to upload
+                        </p>
+                        <p className="ant-upload-hint">
+                          Support for a single or bulk upload. Strictly prohibit
+                          from uploading company data or other band files
+                        </p>
+                      </>
+                    )}
+                  </Upload.Dragger>
+                  {state.baseUrl.status ? (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 10,
+                        cursor: "pointer",
+                        right: 10,
+                      }}
+                      onClick={() => {
+                        state.setBaseUrl({
+                          FileList: [],
+                          status: false,
+                          url: "",
+                        });
+                      }}
+                    >
+                      <Delete set="curved" primaryColor="#f50" />
+                    </div>
+                  ) : null}
+                </div>
+              </Col>
             </Row>
           </Form>
         </div>
       </Modal>
     </>
-  )
+  );
 }

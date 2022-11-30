@@ -9,71 +9,80 @@ import {
   TwoUsers,
   User,
   Wallet,
-} from 'react-iconly'
-import IntlMessages from '../../layout/components/lang/IntlMessages'
+} from "react-iconly";
+import IntlMessages from "../../layout/components/lang/IntlMessages";
 
 const pages = [
   {
-    header: 'Master Data',
+    header: "Dashboard",
   },
   {
-    id: 'employee',
-    title: 'Karyawan',
+    id: "dashboard",
+    title: "Dashboard",
+    navLink: "/",
+    icon: <TwoUsers set="curved" className="remix-icon" />,
+  },
+  {
+    header: "Master Data",
+  },
+  {
+    id: "employee",
+    title: "Karyawan",
     icon: <TwoUsers set="curved" className="remix-icon" />,
     children: [
       {
-        id: 'employee',
-        title: 'Karyawan',
-        navLink: '/pages/employee',
+        id: "employee",
+        title: "Karyawan",
+        navLink: "/pages/employee",
         icon: <TwoUsers set="curved" className="remix-icon" />,
       },
       {
-        id: 'family',
-        title: 'Kelola Keluarga',
-        navLink: '/pages/family',
+        id: "family",
+        title: "Kelola Keluarga",
+        navLink: "/pages/family",
         icon: <TwoUsers set="curved" className="remix-icon" />,
       },
     ],
   },
   {
-    id: 'attendance',
-    title: 'Absensi',
-    navLink: '/pages/attendance',
+    id: "attendance",
+    title: "Absensi",
+    navLink: "/pages/attendance",
     icon: <Calendar set="curved" className="remix-icon" />,
   },
   {
-    id: 'position',
-    title: 'Jabatan',
-    navLink: '/pages/position',
+    id: "position",
+    title: "Jabatan",
+    navLink: "/pages/position",
     icon: <People set="curved" className="remix-icon" />,
   },
   {
-    id: 'user',
-    title: 'Pengguna',
-    navLink: '/pages/user',
+    id: "user",
+    title: "Pengguna",
+    navLink: "/pages/user",
     icon: <Lock set="curved" className="remix-icon" />,
   },
   {
-    header: 'Transaksi',
+    header: "Transaksi",
   },
   {
-    id: 'payroll',
-    title: 'Data Penggajian',
-    navLink: '/pages/payroll',
+    id: "payroll",
+    title: "Data Penggajian",
+    navLink: "/pages/payroll",
     icon: <Wallet set="curved" className="remix-icon" />,
   },
   {
-    id: 'report-attendance',
-    title: 'Laporan Absensi',
-    navLink: '/pages/report-attendance',
+    id: "report-attendance",
+    title: "Laporan Absensi",
+    navLink: "/pages/report-attendance",
     icon: <Paper set="curved" className="remix-icon" />,
   },
   {
-    id: 'report-payroll',
-    title: 'Laporan Penggajian',
-    navLink: '/pages/report-payroll',
+    id: "report-payroll",
+    title: "Laporan Penggajian",
+    navLink: "/pages/report-payroll",
     icon: <Document set="curved" className="remix-icon" />,
   },
-]
+];
 
-export default pages
+export default pages;
