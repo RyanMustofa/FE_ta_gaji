@@ -7,20 +7,25 @@ import PageTitle from "../../../layout/components/content/page-title";
 import query from "../../../utils/query";
 import httpRequest from "@/utils/axios";
 import { useState } from "react";
+import moment from "moment/moment";
 
-const endpoint = "api/karyawan";
+const endpoint = "api/karyawan/detail";
 
 const Detail = () => {
-  const [antLoading, setAntLoading] = useState(false);
+  const [antLoading, setAntLoading] = useState(true);
+  const [karyawan, setKaryawan] = useState([]);
   const getData = async (id) => {
     setAntLoading(true);
     await httpRequest({
-      url: endpoint,
+      url: `${endpoint}`,
       method: "get",
-      //   params: meta,
+      params: {
+        id: id,
+      },
     })
       .then((response) => {
-        console.log(response);
+        console.log(response?.data?.data);
+        setKaryawan(response?.data?.data);
       })
       .finally(() => {
         setAntLoading(false);
@@ -29,14 +34,11 @@ const Detail = () => {
   useEffect(() => {
     let id = query("id");
     getData(id);
-    console.log(id);
   }, []);
   const data = [
-    "Racing car sprays burning fuel into crowd.",
-    "Japanese princess to wed commoner.",
-    "Australian walks 100km after outback crash.",
-    "Man charged over missing wedding girl.",
-    "Los Angeles battles huge wildfires.",
+    {
+      ...karyawan,
+    },
   ];
   return (
     <>
@@ -62,19 +64,47 @@ const Detail = () => {
                 <Col span={12}>
                   <Image
                     style={{ width: "100%", borderRadius: 10 }}
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    src={
+                      karyawan.foto ||
+                      "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    }
                   />
                 </Col>
               </Row>
-              <Divider orientation="left">Default Size</Divider>
+              <Divider orientation="left">Detail Karyawan</Divider>
               <List
-                header={<div>Header</div>}
-                footer={<div>Footer</div>}
                 bordered
                 dataSource={data}
                 renderItem={(item) => (
                   <List.Item>
-                    <Typography.Text mark>[ITEM]</Typography.Text> {item}
+                    <div style={{ display: "flex" }}>
+                      <div style={{ marginRight: 120 }}>
+                        <p>Nama</p>
+                        <p>NO HP</p>
+                        <p>Tanggal Lahir</p>
+                        <p>Jabatan</p>
+                        {item?.keluargas?.map((el) => {
+                          return (
+                            <>
+                              <p>Nama {el.jenis}</p>
+                            </>
+                          );
+                        })}
+                      </div>
+                      <div>
+                        <p>: {item.nama}</p>
+                        <p>: {item.no_hp}</p>
+                        <p>: {moment(item.tgl_lahir).format("DD MMMM yyyy")}</p>
+                        <p>: {item?.jabatan?.nama}</p>
+                        {item?.keluargas?.map((el) => {
+                          return (
+                            <>
+                              <p>: Nama {el.nama}</p>
+                            </>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </List.Item>
                 )}
               />
